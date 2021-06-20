@@ -30,7 +30,7 @@ const index = () => {
         });
 
         if (response.data?.resetPassword.errors) {
-          let errorsMap = toErrorMap(response.data?.resetPassword.errors);
+          let errorsMap: any = toErrorMap(response.data?.resetPassword.errors);
           if (errorsMap.hasOwnProperty("error")) {
             setState({
               ...state,
