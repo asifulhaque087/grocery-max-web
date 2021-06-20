@@ -3,15 +3,19 @@ import { ApolloClient, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import cache from "./cache";
 
-let httpLink = createHttpLink({
-  uri: "http://localhost:5000/graphql",
-});
+let uri: any;
 
 if (process.env.NODE_ENV === "production") {
-  httpLink = createHttpLink({
-    uri: "https://grocery-max-server.herokuapp.com/graphql",
-  });
+  uri = "https://grocery-max-server.herokuapp.com/graphql";
+} else {
+  console.log("from development");
+
+  uri = "http://localhost:5000/graphql";
 }
+
+const httpLink = createHttpLink({
+  uri,
+});
 
 const authLink = setContext(() => {
   const token = sessionStorage.getItem("jwtToken");
