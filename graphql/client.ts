@@ -3,15 +3,15 @@ import { ApolloClient, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import cache from "./cache";
 
-let uri: any;
+let uri = "https://grocery-max-server.herokuapp.com/graphql";
 
-if (process.env.NODE_ENV === "production") {
-  uri = "https://grocery-max-server.herokuapp.com/graphql";
-} else {
-  console.log("from development");
+// if (process.env.NODE_ENV === "production") {
+//   uri = "https://grocery-max-server.herokuapp.com/graphql";
+// } else {
+//   console.log("from development");
 
-  uri = "http://localhost:5000/graphql";
-}
+//   uri = "http://localhost:5000/graphql";
+// }
 
 const httpLink = createHttpLink({
   uri,
