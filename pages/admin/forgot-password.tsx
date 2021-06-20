@@ -1,4 +1,3 @@
-import Link from "next/link";
 
 import { Formik, Form } from "formik";
 import { FORGOT_PASSWORD_USER } from "../../graphql/mutations/userMutation";
@@ -26,7 +25,7 @@ const forgotPassword = () => {
         const response = await forgotPassword({ variables: values });
 
         if (response.data?.forgotPassword.errors) {
-          let errorsMap = toErrorMap(response.data?.forgotPassword.errors);
+          let errorsMap: any= toErrorMap(response.data?.forgotPassword.errors);
           if (errorsMap.hasOwnProperty("error")) {
             setState({
               ...state,

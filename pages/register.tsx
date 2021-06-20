@@ -28,7 +28,7 @@ const register = () => {
         const response = await register({ variables: values });
 
         if (response.data?.register.errors) {
-          let errorsMap = toErrorMap(response.data?.register.errors);
+          let errorsMap:any = toErrorMap(response.data?.register.errors);
           if (errorsMap.hasOwnProperty("error")) {
             setState({
               ...state,

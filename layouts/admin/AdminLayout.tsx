@@ -12,7 +12,7 @@ const AdminLayout = (props) => {
     <div>
       <Atopbar />
       <div className={`${userSideDrawer ? "ml-0 md:ml-64" : "ml-0 md:ml-0"} `}>
-        <Asidedrawer />
+        <Asidedrawer {...props} />
         {props.children}
       </div>
     </div>

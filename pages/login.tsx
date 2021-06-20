@@ -26,7 +26,7 @@ const login = () => {
         const response = await login({ variables: values });
 
         if (response.data?.login.errors) {
-          let errorsMap = toErrorMap(response.data?.login.errors);
+          let errorsMap: any = toErrorMap(response.data?.login.errors);
           if (errorsMap.hasOwnProperty("error")) {
             setState({
               ...state,

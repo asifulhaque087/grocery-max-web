@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -21,9 +17,10 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "graphql/reactivities/checkoutProcessVariable.js", "next.config.js", "layouts/default/Dsidedrawer.tsx"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "**/*.tsx",
+    "graphql/reactivities/checkoutProcessVariable.js",
+    "next.config.js",
+    "layouts/default/Dsidedrawer.tsx"
+  ],
+  "exclude": ["node_modules"]
 }

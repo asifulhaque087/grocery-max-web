@@ -1,6 +1,6 @@
 import { useField, ErrorMessage } from "formik";
 
-const AauthTextField = ({ label, ...props }) => {
+const AauthTextField = ({ label, ...props }: any) => {
   const [field, meta] = useField<{}>(props);
 
   // const errorText = meta.error && meta.touched ? meta.error : "";
