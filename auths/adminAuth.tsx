@@ -11,7 +11,7 @@ const adminAuth = (WrappedComponent) => {
     useEffect(() => {
       if (
         sessionStorage.getItem("jwtToken") &&
-        jwtDecode(sessionStorage.getItem("jwtToken")).role === "admin"
+        (jwtDecode(sessionStorage.getItem("jwtToken")) as any).role === "admin"
       ) {
         setVerified(true);
       } else {

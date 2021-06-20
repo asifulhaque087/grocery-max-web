@@ -11,7 +11,7 @@ const userAuth = (WrappedComponent) => {
     useEffect(() => {
       if (
         sessionStorage.getItem("jwtToken") &&
-        jwtDecode(sessionStorage.getItem("jwtToken")).role === "buyer"
+        (jwtDecode(sessionStorage.getItem("jwtToken")) as any).role === "buyer"
       ) {
         setVerified(true);
       } else {
