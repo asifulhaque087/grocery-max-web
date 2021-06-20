@@ -36,12 +36,21 @@ export const DELETE_CATEGORY = gql`
 `;
 // ============================= UPDATE CATEGORY MUTATION =================>
 export const UPDATE_CATEGORY = gql`
-  mutation updateCategory($id: ID!, $name: String!, $photo: Upload) {
+  mutation updateCategory($id: ID!, $name: String!, $photo: String!) {
     updateCategory(input: { id: $id, name: $name, photo: $photo }) {
-      id
-      name
-      photo
-      createdAt
+      errors {
+        field
+        message
+      }
+      category {
+        id
+        name
+        photo
+        subcategories {
+          id
+          name
+        }
+      }
     }
   }
 `;

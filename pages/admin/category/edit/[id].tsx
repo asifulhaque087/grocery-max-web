@@ -2,11 +2,14 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 import { Formik, Form } from "formik";
-import { CREATE_CATEGORY } from "../../../../graphql/mutations/categoryMutation";
+import {
+  CREATE_CATEGORY,
+  UPDATE_CATEGORY,
+} from "../../../../graphql/mutations/categoryMutation";
 import { useMutation, useQuery } from "@apollo/client";
 import { toErrorMap } from "../../../../utils/toErrorMap";
 import { withApollo } from "../../../../graphql/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ATextField from "../../../../components/forms/admin/ATextField";
 import AdminLayout from "../../../../layouts/admin/AdminLayout";
 import { convertToBase64 } from "../../../../utils/convertToBase64";
@@ -26,11 +29,13 @@ const index = () => {
       id: router.query.id,
     },
   });
-  const [createCategory] = useMutation(CREATE_CATEGORY);
+  const [updateCategory] = useMutation(UPDATE_CATEGORY);
   if (loading) {
     return (
       <div>
-        <div>loading...</div>
+        <div className="h-screen w-full flex items-center justify-center">
+          <div className="h-7 w-7 rounded-full border-dotted border-2  border-gray-500 animate-spin ease-linear mr-3"></div>
+        </div>
       </div>
     );
   }
@@ -42,7 +47,6 @@ const index = () => {
       </div>
     );
   }
-  console.log("getCategory", getCategory);
 
   return (
     <AdminLayout>
@@ -83,35 +87,25 @@ const index = () => {
             photos: [getCategory.photo],
           }}
           onSubmit={async (values, actions) => {
-            console.log(values);
-
-            const response = await createCategory({
-              variables: { ...values, photo: values.photos[0] || "" },
-              update: (proxy, { data: { createCategory: newCategory } }) => {
-                const data: any = proxy.readQuery({
-                  query: GET_CATEGORIES,
-                });
-                console.log("data.getCategories", data.getCategories);
-                console.log("newCategory", newCategory.category);
-
-                if (data) {
-                  proxy.writeQuery({
-                    query: GET_CATEGORIES,
-                    data: {
-                      getCategories: [newCategory, ...data.getCategories],
-                    },
+            const response = await updateCategory({
+              variables: {
+                ...values,
+                id: router.query.id,
+                photo: values.photos[0] || "",
+              },
+              update: (_, { data: { updateCategory: newCategory } }) => {
+                if (newCategory?.category) {
+                  setState({
+                    ...state,
+                    serverMessage: "Category Edited Successfully",
                   });
+                  router.push("/admin/category");
                 }
-
-                setState({
-                  ...state,
-                  serverMessage: "Category Edited Successfully",
-                });
               },
             });
-            if (response.data?.createCategory.errors) {
+            if (response.data?.updateCategory.errors) {
               let errorsMap: any = toErrorMap(
-                response.data?.createCategory.errors
+                response.data?.updateCategory.errors
               );
               if (errorsMap.hasOwnProperty("error")) {
                 setState({
@@ -178,7 +172,12 @@ const index = () => {
                       type="submit"
                       style={{ transition: "all .15s ease" }}
                     >
-                      Submit
+                      <div className="flex">
+                        {isSubmitting && (
+                          <div className="h-5 w-5 rounded-full border-dotted border-2  border-white animate-spin ease-linear mr-3"></div>
+                        )}
+                        <p>Edit</p>
+                      </div>
                     </button>
                   </div>
                 </div>

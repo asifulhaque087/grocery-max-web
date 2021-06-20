@@ -164,7 +164,12 @@ const index = () => {
                       type="submit"
                       style={{ transition: "all .15s ease" }}
                     >
-                      Submit
+                      <div className="flex">
+                        {isSubmitting && (
+                          <div className="h-5 w-5 rounded-full border-dotted border-2  border-white animate-spin ease-linear mr-3"></div>
+                        )}
+                        <p>Submit</p>
+                      </div>
                     </button>
                   </div>
                 </div>

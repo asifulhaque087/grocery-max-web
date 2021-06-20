@@ -27,8 +27,6 @@ export default new InMemoryCache({
           },
         },
         getCategory(_, { args, toReference }) {
-          console.log("the id is", args.id);
-
           return toReference({
             __typename: "Category",
             id: args.id,

@@ -1,16 +1,20 @@
 import Link from "next/link";
 import moment from "moment";
 import { TrashIcon, PencilAltIcon } from "@heroicons/react/solid";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { withApollo } from "../../../graphql/client";
 import AdminLayout from "../../../layouts/admin/AdminLayout";
 import { GET_CATEGORIES } from "../../../graphql/queries/categoryQuery";
 import { DELETE_CATEGORY } from "../../../graphql/mutations/categoryMutation";
+import TableLoading from "../../../components/skeletonLoading/TableLoading";
+import { storeIdVar } from "../../../graphql/reactivities/storeIdVariable";
 
 const index = () => {
+  const storeId = useReactiveVar(storeIdVar);
   const { loading: queryLoading, data: { getCategories: categories } = {} } =
     useQuery(GET_CATEGORIES);
-  const [deleteCategory] = useMutation(DELETE_CATEGORY);
+  const [deleteCategory, { loading: mutationLoading }] =
+    useMutation(DELETE_CATEGORY);
 
   return (
     <AdminLayout>
@@ -36,99 +40,114 @@ const index = () => {
                 </div>
               </li>
               <li>/</li>
-              <li className="px-2 capitalize">add category</li>
+              <li className="px-2 capitalize">list category</li>
             </ol>
           </nav>
         </div>
       </div>
-      <div className="py-20 px-5">
+      <h1 className="text-center text-gray-500 capitalize my-4 text-xl font-medium">
+        list category
+      </h1>
+      <div className="px-5">
         <div className="mx-auto container bg-white dark:bg-gray-800 shadow-none sm:shadow rounded ">
           <div className="w-full  xl:overflow-x-hidden">
-            <table className="min-w-full bg-white dark:bg-gray-800 block sm:table">
-              <thead className="hidden sm:table-header-group">
-                <tr className="w-full h-16 border-gray-300 dark:border-gray-200 border-b py-8 align-middle text-center">
-                  <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
-                    Name
-                  </th>
-                  <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
-                    Image
-                  </th>
-                  <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
-                    Date
-                  </th>
-                  <td className="text-gray-600 dark:text-gray-400  pr-8  text-sm tracking-normal leading-4 font-medium">
-                    Action
-                  </td>
-                </tr>
-              </thead>
-              <tbody className="block sm:table-row-group">
-                {categories &&
-                  categories.map(({ category }) => (
-                    <tr
-                      key={category.id}
-                      className="h-auto sm:h-24 border-gray-300 dark:border-gray-200 
+            {queryLoading ? (
+              <div>
+                <TableLoading />
+              </div>
+            ) : (
+              <table className="min-w-full bg-white dark:bg-gray-800 block sm:table">
+                <thead className="hidden sm:table-header-group">
+                  <tr className="w-full h-16 border-gray-300 dark:border-gray-200 border-b py-8 align-middle text-center">
+                    <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
+                      Name
+                    </th>
+                    <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
+                      Image
+                    </th>
+                    <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
+                      Date
+                    </th>
+                    <td className="text-gray-600 dark:text-gray-400  pr-8  text-sm tracking-normal leading-4 font-medium">
+                      Action
+                    </td>
+                  </tr>
+                </thead>
+                <tbody className="block sm:table-row-group">
+                  {categories &&
+                    categories.map(({ category }) => (
+                      <tr
+                        key={category.id}
+                        className="h-auto sm:h-24 border-gray-300 dark:border-gray-200 
                         border  sm:border-0 sm:border-b  align-middle text-center block sm:table-row my-10 sm:my-0"
-                    >
-                      <td
-                        className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell text-right sm:text-center relative py-10 sm:py-0 border-b sm:border-b-0"
-                        data-label="Name"
                       >
-                        {category.name}
-                      </td>
-                      <td
-                        className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell
-                        text-right sm:text-right relative py-10 sm:py-0 border-b sm:border-b-0"
-                        data-label="Image"
-                      >
-                        <img
-                          src={category.photo}
-                          alt="category"
-                          className="w-16  overflow-hidden shadow block ml-auto"
-                        />
-                      </td>
-                      <td
-                        className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell
-                        text-right sm:text-center relative    py-10 sm:py-0 border-b sm:border-b-0"
-                        data-label="Date"
-                      >
-                        {/* { new Date( category. createdAt) } */}
-                        {moment
-                          .unix(category.createdAt)
-                          .subtract(10, "days")
-                          .calendar()}
-                      </td>
-                      <td
-                        className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell
-                        text-right sm:text-center relative py-10 sm:py-0 border-b sm:border-b-0"
-                        data-label="Action"
-                      >
-                        <button
-                          className="mr-2"
-                          onClick={async () => {
-                            if (window.confirm("Are you sure ?") == true) {
-                              await deleteCategory({
-                                variables: { id: category.id },
-                                update: (proxy) => {
-                                  proxy.evict({
-                                    id: `Category:${category.id}`,
-                                  });
-                                },
-                              });
-                            }
-                          }}
+                        <td
+                          className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell text-right sm:text-center relative py-10 sm:py-0 border-b sm:border-b-0"
+                          data-label="Name"
                         >
-                          <TrashIcon className={`h-5 text-red-500 `} />
-                        </button>
-                        <Link href={`/admin/category/edit/${category.id}`}>
-                          <button className="ml-2">
-                            <PencilAltIcon className="h-5 text-yellow-500" />
+                          {category.name}
+                        </td>
+                        <td
+                          className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell text-right sm:text-right relative py-10 sm:py-0 border-b sm:border-b-0"
+                          data-label="Image"
+                        >
+                          <img
+                            src={category.photo}
+                            alt="category"
+                            className="w-16  overflow-hidden shadow block ml-auto md:m-auto"
+                          />
+                        </td>
+                        <td
+                          className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell
+                        text-right sm:text-center relative    py-10 sm:py-0 border-b sm:border-b-0"
+                          data-label="Date"
+                        >
+                          {/* { new Date( category. createdAt) } */}
+                          {moment
+                            .unix(category.createdAt)
+                            .subtract(10, "days")
+                            .calendar()}
+                        </td>
+                        <td
+                          className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell
+                        text-right sm:text-center relative py-10 sm:py-0 border-b sm:border-b-0"
+                          data-label="Action"
+                        >
+                          <button
+                            className="mr-2"
+                            onClick={async () => {
+                              if (window.confirm("Are you sure ?") == true) {
+                                storeIdVar(category.id);
+                                await deleteCategory({
+                                  variables: { id: category.id },
+                                  update: (proxy) => {
+                                    proxy.evict({
+                                      id: `Category:${category.id}`,
+                                    });
+                                  },
+                                });
+                              }
+                            }}
+                          >
+                            <TrashIcon
+                              className={`h-5 text-red-500 ${
+                                mutationLoading &&
+                                category.id == storeId &&
+                                "animate-spin"
+                              }`}
+                            />
                           </button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+                          <Link href={`/admin/category/edit/${category.id}`}>
+                            <button className="ml-2">
+                              <PencilAltIcon className="h-5 text-yellow-500" />
+                            </button>
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </div>
