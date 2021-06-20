@@ -8,7 +8,7 @@ import { GET_CATEGORIES } from "../../../graphql/queries/categoryQuery";
 import { DELETE_CATEGORY } from "../../../graphql/mutations/categoryMutation";
 
 const index = () => {
-  const { loading, data: { getCategories: categories } = {} } =
+  const { loading: queryLoading, data: { getCategories: categories } = {} } =
     useQuery(GET_CATEGORIES);
   const [deleteCategory] = useMutation(DELETE_CATEGORY);
 
@@ -117,7 +117,7 @@ const index = () => {
                             }
                           }}
                         >
-                          <TrashIcon className="h-5 text-red-500 " />
+                          <TrashIcon className={`h-5 text-red-500 `} />
                         </button>
                         <Link href={`/admin/category/edit/${category.id}`}>
                           <button className="ml-2">

@@ -59,30 +59,39 @@ const index = () => {
             photos: [],
           }}
           onSubmit={async (values, actions) => {
-            console.log(values);
-
             const response = await createCategory({
               variables: { ...values, photo: values.photos[0] || "" },
               update: (proxy, { data: { createCategory: newCategory } }) => {
                 const data: any = proxy.readQuery({
                   query: GET_CATEGORIES,
                 });
-                console.log("data.getCategories", data.getCategories);
-                console.log("newCategory", newCategory.category);
-
-                if (data) {
-                  proxy.writeQuery({
-                    query: GET_CATEGORIES,
-                    data: {
-                      getCategories: [newCategory, ...data.getCategories],
-                    },
+                if (newCategory.category) {
+                  if (data) {
+                    proxy.writeQuery({
+                      query: GET_CATEGORIES,
+                      data: {
+                        getCategories: [newCategory, ...data.getCategories],
+                      },
+                    });
+                  }
+                  setState({
+                    ...state,
+                    serverMessage: "Cateogry added successfully",
                   });
                 }
+                // if (data) {
+                //   proxy.writeQuery({
+                //     query: GET_CATEGORIES,
+                //     data: {
+                //       getCategories: [newCategory, ...data.getCategories],
+                //     },
+                //   });
+                // }
 
-                setState({
-                  ...state,
-                  serverMessage: "Category Added Successfully",
-                });
+                // setState({
+                //   ...state,
+                //   serverMessage: "Category Added Successfully",
+                // });
               },
             });
             if (response.data?.createCategory.errors) {
@@ -202,3 +211,22 @@ label="Name"
     ))}
 </div>; */
 }
+
+// if (newCategory.category) {
+//   if (data) {
+//     proxy.writeQuery({
+//       query: GET_CATEGORIES,
+//       data: {
+//         getCategories: [
+//           newCategory.category,
+//           ...data.getCategories,
+//         ],
+//       },
+//     });
+//   }
+//   setState({
+//     ...state,
+//     serverMessage: "Cateogry added successfully",
+//   });
+
+// }

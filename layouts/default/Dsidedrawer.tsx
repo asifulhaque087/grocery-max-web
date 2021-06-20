@@ -96,7 +96,7 @@ const Dsidedrawer = () => {
                         {Array.from(Array(10).keys()).map((item) => {
                           return (
                             <motion.div
-                              className="mx-2 my-5  rounded bg-gray-200"
+                              className="mx-2 my-5  rounded bg-gray-200 animate-pulse"
                               key={item}
                             >
                               <div className="py-4 px-2"></div>
