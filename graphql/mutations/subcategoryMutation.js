@@ -2,16 +2,23 @@ import { gql } from "@apollo/client";
 
 // ============================= CREATE  MUTATION =================>
 export const CREATE_SUBCATEGORY = gql`
-  mutation createSubcategory($photo: Upload, $name: String!, $category: ID) {
+  mutation createSubcategory($photo: String!, $name: String!, $category: ID) {
     createSubcategory(
       input: { photo: $photo, name: $name, category: $category }
     ) {
-      id
-      name
-      photo
-      createdAt
-      category {
+      errors {
+        field
+        message
+      }
+      subcategory {
         id
+        name
+        photo
+        createdAt
+        category {
+          id
+          name
+        }
       }
     }
   }
@@ -20,11 +27,11 @@ export const CREATE_SUBCATEGORY = gql`
 export const DELETE_SUBCATEGORY = gql`
   mutation deleteSubcategory($id: ID!) {
     deleteSubcategory(id: $id) {
-      id
-      name
-      photo
-      createdAt
-      category {
+      errors {
+        field
+        message
+      }
+      subcategory {
         id
       }
     }
@@ -35,18 +42,25 @@ export const UPDATE_SUBCATEGORY = gql`
   mutation updateSubcategory(
     $id: ID!
     $name: String!
-    $photo: Upload
+    $photo: String!
     $category: ID
   ) {
     updateSubcategory(
       input: { id: $id, name: $name, photo: $photo, category: $category }
     ) {
-      id
-      name
-      photo
-      createdAt
-      category {
+      errors {
+        field
+        message
+      }
+      subcategory {
         id
+        name
+        photo
+        createdAt
+        category {
+          id
+          name
+        }
       }
     }
   }

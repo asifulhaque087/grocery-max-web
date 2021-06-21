@@ -12,10 +12,7 @@ export const CREATE_CATEGORY = gql`
         id
         name
         photo
-        subcategories {
-          id
-          name
-        }
+        createdAt
       }
     }
   }
@@ -46,10 +43,7 @@ export const UPDATE_CATEGORY = gql`
         id
         name
         photo
-        subcategories {
-          id
-          name
-        }
+        createdAt
       }
     }
   }

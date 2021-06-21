@@ -5,13 +5,19 @@ import { gql } from "@apollo/client";
 export const GET_SUBCATEGORIES = gql`
   {
     getSubcategories {
-      id
-      name
-      photo
-      createdAt
-      category {
+      errors {
+        field
+        message
+      }
+      subcategory {
         id
         name
+        photo
+        createdAt
+        category {
+          id
+          name
+        }
       }
     }
   }
@@ -27,6 +33,7 @@ export const GET_SUBCATEGORY = gql`
       createdAt
       category {
         id
+        name
       }
     }
   }

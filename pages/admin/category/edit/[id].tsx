@@ -17,6 +17,7 @@ import {
   GET_CATEGORIES,
   GET_CATEGORY,
 } from "../../../../graphql/queries/categoryQuery";
+import FullPageLoading from "../../../../components/skeletonLoading/FullPageLoading";
 
 const index = () => {
   const [state, setState] = useState({
@@ -31,13 +32,7 @@ const index = () => {
   });
   const [updateCategory] = useMutation(UPDATE_CATEGORY);
   if (loading) {
-    return (
-      <div>
-        <div className="h-screen w-full flex items-center justify-center">
-          <div className="h-7 w-7 rounded-full border-dotted border-2  border-gray-500 animate-spin ease-linear mr-3"></div>
-        </div>
-      </div>
-    );
+    return <FullPageLoading />;
   }
 
   if (!getCategory) {
@@ -73,13 +68,13 @@ const index = () => {
                   </div>
                 </li>
                 <li>/</li>
-                <li className="px-2 capitalize font-medium">add category</li>
+                <li className="px-2 capitalize font-medium">edit category</li>
               </ol>
             </nav>
           </div>
         </div>
         <h1 className="text-center capitalize my-4 text-xl font-medium">
-          add category
+          edit category
         </h1>
         <Formik
           initialValues={{

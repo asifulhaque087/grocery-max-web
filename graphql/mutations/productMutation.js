@@ -4,53 +4,54 @@ import { gql } from "@apollo/client";
 export const CREATE_PRODUCT = gql`
   mutation createProduct(
     $name: String!
-    $photo: Upload
+    $photo: String!
     $description: String
-    $stock: String
-    $qty: String
-    $unit: String
     $price: String
     $discountPrice: String
-    $category: ID
-    $subcategory: ID #$subsubcategory: ID #$variationvalues: [ID]
+    $qty: String
+    $unit: String
+    $stock: String
+    $subcategory: ID
   ) {
     createProduct(
       input: {
         name: $name
         photo: $photo
         description: $description
-        stock: $stock
-        qty: $qty
-        unit: $unit
         price: $price
         discountPrice: $discountPrice
-        category: $category
+        qty: $qty
+        unit: $unit
+        stock: $stock
         subcategory: $subcategory
-        #subsubcategory: $subsubcategory
-        #variationvalues: $variationvalues
       }
     ) {
-      id
-      name
-      photo
-      description
-      stock
-      qty
-      unit
-      price
-      discountPrice
-      totalSell
-      createdAt
-      category {
-        id
+      errors {
+        field
+        message
       }
-      subcategory {
+      product {
         id
+        name
+        photo
+        description
+        stock
+        qty
+        unit
+        price
+        discountPrice
+        totalSell
+        createdAt
+
+        subcategory {
+          id
+          name
+          category {
+            id
+            name
+          }
+        }
       }
-      #variationvalues {
-      #id
-      #name
-      #}
     }
   }
 `;
@@ -58,10 +59,13 @@ export const CREATE_PRODUCT = gql`
 export const DELETE_PRODUCT = gql`
   mutation deleteProduct($id: ID!) {
     deleteProduct(id: $id) {
-      id
-      name
-      photo
-      createdAt
+      errors {
+        field
+        message
+      }
+      product {
+        id
+      }
     }
   }
 `;
@@ -70,15 +74,14 @@ export const UPDATE_PRODUCT = gql`
   mutation updateProduct(
     $id: ID!
     $name: String!
-    $photo: Upload
+    $photo: String!
     $description: String
     $stock: String
     $qty: String
     $unit: String
     $price: String
     $discountPrice: String
-    $category: ID
-    $subcategory: ID #$subsubcategory: ID #$variationvalues: [ID]
+    $subcategory: ID
   ) {
     updateProduct(
       input: {
@@ -91,28 +94,34 @@ export const UPDATE_PRODUCT = gql`
         unit: $unit
         price: $price
         discountPrice: $discountPrice
-        category: $category
         subcategory: $subcategory
-        #subsubcategory: $subsubcategory
-        #variationvalues: $variationvalues
       }
     ) {
-      id
-      name
-      photo
-      description
-      stock
-      qty
-      unit
-      price
-      discountPrice
-      totalSell
-      createdAt
-      category {
-        id
+      errors {
+        field
+        message
       }
-      subcategory {
+      product {
         id
+        name
+        photo
+        description
+        stock
+        qty
+        unit
+        price
+        discountPrice
+        totalSell
+        createdAt
+
+        subcategory {
+          id
+          name
+          category {
+            id
+            name
+          }
+        }
       }
     }
   }

@@ -21,6 +21,24 @@ export const GET_CATEGORIES = gql`
     }
   }
 `;
+// ============================= GET CATEGORIES By Admin=================>
+
+export const GET_CATEGORIES_BY_ADMIN = gql`
+  {
+    getCategoriesByAdmin {
+      errors {
+        field
+        message
+      }
+      category {
+        id
+        name
+        photo
+        createdAt
+      }
+    }
+  }
+`;
 // ============================= GET CATEGORY QUERY =================>
 
 export const GET_CATEGORY = gql`
@@ -29,11 +47,7 @@ export const GET_CATEGORY = gql`
       id
       name
       photo
-      subcategories {
-        id
-        name
-        photo
-      }
+      createdAt
     }
   }
 `;

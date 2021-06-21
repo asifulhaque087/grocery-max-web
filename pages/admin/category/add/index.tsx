@@ -10,7 +10,10 @@ import { useState } from "react";
 import ATextField from "../../../../components/forms/admin/ATextField";
 import AdminLayout from "../../../../layouts/admin/AdminLayout";
 import { convertToBase64 } from "../../../../utils/convertToBase64";
-import { GET_CATEGORIES } from "../../../../graphql/queries/categoryQuery";
+import {
+  GET_CATEGORIES,
+  GET_CATEGORIES_BY_ADMIN,
+} from "../../../../graphql/queries/categoryQuery";
 
 const index = () => {
   const [state, setState] = useState({
@@ -63,14 +66,17 @@ const index = () => {
               variables: { ...values, photo: values.photos[0] || "" },
               update: (proxy, { data: { createCategory: newCategory } }) => {
                 const data: any = proxy.readQuery({
-                  query: GET_CATEGORIES,
+                  query: GET_CATEGORIES_BY_ADMIN,
                 });
                 if (newCategory.category) {
                   if (data) {
                     proxy.writeQuery({
-                      query: GET_CATEGORIES,
+                      query: GET_CATEGORIES_BY_ADMIN,
                       data: {
-                        getCategories: [newCategory, ...data.getCategories],
+                        getCategoriesByAdmin: [
+                          newCategory,
+                          ...data.getCategoriesByAdmin,
+                        ],
                       },
                     });
                   }

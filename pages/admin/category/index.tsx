@@ -4,15 +4,17 @@ import { TrashIcon, PencilAltIcon } from "@heroicons/react/solid";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { withApollo } from "../../../graphql/client";
 import AdminLayout from "../../../layouts/admin/AdminLayout";
-import { GET_CATEGORIES } from "../../../graphql/queries/categoryQuery";
+import { GET_CATEGORIES_BY_ADMIN } from "../../../graphql/queries/categoryQuery";
 import { DELETE_CATEGORY } from "../../../graphql/mutations/categoryMutation";
 import TableLoading from "../../../components/skeletonLoading/TableLoading";
 import { storeIdVar } from "../../../graphql/reactivities/storeIdVariable";
 
 const index = () => {
   const storeId = useReactiveVar(storeIdVar);
-  const { loading: queryLoading, data: { getCategories: categories } = {} } =
-    useQuery(GET_CATEGORIES);
+  const {
+    loading: queryLoading,
+    data: { getCategoriesByAdmin: categories } = {},
+  } = useQuery(GET_CATEGORIES_BY_ADMIN);
   const [deleteCategory, { loading: mutationLoading }] =
     useMutation(DELETE_CATEGORY);
 
@@ -35,12 +37,12 @@ const index = () => {
               </li>
               <li>/</li>
               <li className="px-2">
-                <div className="no-underline text-indigo capitalize">
+                <div className="no-underline text-indigo capitalize ">
                   <Link href="/admin">category</Link>
                 </div>
               </li>
               <li>/</li>
-              <li className="px-2 capitalize">list category</li>
+              <li className="px-2 capitalize font-medium">list category</li>
             </ol>
           </nav>
         </div>

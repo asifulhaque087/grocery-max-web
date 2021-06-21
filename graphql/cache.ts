@@ -11,12 +11,17 @@ export default new InMemoryCache({
             return incoming;
           },
         },
+        getCategoriesByAdmin: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
         getSubcategories: {
           merge(existing, incoming) {
             return incoming;
           },
         },
-        getProducts: {
+        getProductsByAdmin: {
           merge(existing, incoming) {
             return incoming;
           },
@@ -27,6 +32,7 @@ export default new InMemoryCache({
           },
         },
         getCategory(_, { args, toReference }) {
+          console.log("from cache", args.id);
           return toReference({
             __typename: "Category",
             id: args.id,
@@ -58,7 +64,7 @@ export default new InMemoryCache({
         //     id: args.id,
         //   });
         // },
-        getProduct(_, { args, toReference }) {
+        getProductByAdmin(_, { args, toReference }) {
           return toReference({
             __typename: "Product",
             id: args.id,

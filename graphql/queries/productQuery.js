@@ -2,37 +2,43 @@ import { gql } from "@apollo/client";
 
 // ============================= GET ALL QUERY =================>
 
-export const GET_PRODUCTS = gql`
+export const GET_PRODUCTS_BY_ADMIN = gql`
   {
-    getProducts {
-      id
-      name
-      photo
-      description
-      stock
-      qty
-      unit
-      price
-      discountPrice
-      totalSell
-      createdAt
-
-      category {
-        id
-        name
+    getProductsByAdmin {
+      errors {
+        field
+        message
       }
-      subcategory {
+      product {
         id
         name
+        photo
+        description
+        stock
+        qty
+        unit
+        price
+        discountPrice
+        totalSell
+        createdAt
+
+        subcategory {
+          id
+          name
+          category {
+            id
+            name
+          }
+        }
       }
     }
   }
 `;
 // ============================= GET SINGLE QUERY =================>
 
-export const GET_PRODUCT = gql`
-  query getProduct($id: ID!) {
-    getProduct(id: $id) {
+export const GET_PRODUCT_BY_ADMIN = gql`
+  query getProductByAdmin($id: ID!) {
+    getProductByAdmin(id: $id) {
       id
       name
       photo
@@ -44,13 +50,14 @@ export const GET_PRODUCT = gql`
       discountPrice
       totalSell
       createdAt
-      category {
-        id
-        name
-      }
+
       subcategory {
         id
         name
+        category {
+          id
+          name
+        }
       }
     }
   }
