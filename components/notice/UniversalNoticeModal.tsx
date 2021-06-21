@@ -24,7 +24,7 @@ const UniversalNoticeModal = () => {
             <button
               onClick={() => universalModalVar(!universalModalVar())}
               className="absolute top-0 right-0 -mt-4 -mr-4 bg-yellow-700 text-white border
-               border-white h-8 w-8 block mb-2 rounded-full"
+               border-white h-8 w-8 block mb-2 rounded-full z-20"
             >
               &times;
             </button>
