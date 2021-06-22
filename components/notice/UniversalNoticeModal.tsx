@@ -28,9 +28,8 @@ const UniversalNoticeModal = () => {
             >
               &times;
             </button>
-            {/* <div className="absolute top-0 left-0 bottom-0 right-0  "> */}
-            <div className="absolute h-full w-full left-0 right-0 top-0 p-5  overflow-hidden ">
-              <div className="absolute overflow-y-auto h-full px-5">
+            <div className="absolute h-full w-full left-0 right-0 top-0   overflow-hidden ">
+              <div className="absolute overflow-y-auto h-full p-5">
                 <div>
                   <h1 className="capitalize font-bold text-2xl text-center">
                     plz.., read me
