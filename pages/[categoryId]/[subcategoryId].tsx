@@ -14,6 +14,7 @@ import {
   increaseItem,
   removeToCart,
 } from "../../graphql/reactivities/cartVariable";
+import DefaultLayout from "../../layouts/default/DefaultLayout";
 
 const SubCatToProduct = () => {
   const cartProducts = useReactiveVar(cartItems);
@@ -33,7 +34,7 @@ const SubCatToProduct = () => {
   }
 
   return (
-    <>
+    <DefaultLayout>
       <div className="grid grid-flow-col grid-cols-3 grid-rows-3 gap-4">
         {products &&
           products.map((product) => (
@@ -104,7 +105,7 @@ const SubCatToProduct = () => {
           </p>
         </div>
       </div>
-    </>
+    </DefaultLayout>
   );
 };
 
