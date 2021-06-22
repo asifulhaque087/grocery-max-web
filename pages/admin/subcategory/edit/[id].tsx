@@ -181,7 +181,9 @@ const index = () => {
                     {values.photos &&
                       values.photos.map((photo, i) => (
                         <div key={i}>
-                          <img src={photo} />
+                          <img
+                            src={photo.length > 20 ? photo : `/images/${photo}`}
+                          />
                         </div>
                       ))}
                     <button
@@ -194,7 +196,7 @@ const index = () => {
                         {isSubmitting && (
                           <div className="h-5 w-5 rounded-full border-dotted border-2  border-white animate-spin ease-linear mr-3"></div>
                         )}
-                        <p>Submit</p>
+                        <p>Update</p>
                       </div>
                     </button>
                   </div>

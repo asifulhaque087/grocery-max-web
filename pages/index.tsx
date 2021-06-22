@@ -23,9 +23,6 @@ const Home = () => {
           <meta name="description" content="best grocery shop" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <div>
-          <img src="/images/skeletonInTable.jpg" alt="skeleton" />
-        </div>
         from home page Lorem ipsum dolor, sit amet consectetur adipisicing elit.
         Porro praesentium dolorem perferendis earum beatae ab magnam, ad velit
         recusandae similique ipsam nam voluptate excepturi. Vitae ut praesentium

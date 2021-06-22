@@ -99,7 +99,7 @@ const index = () => {
                           data-label="Image"
                         >
                           <img
-                            src={subcategory.photo}
+                            src={`/images/${subcategory.photo}`}
                             alt="subcategory"
                             className="w-16  overflow-hidden shadow block ml-auto md:m-auto"
                           />

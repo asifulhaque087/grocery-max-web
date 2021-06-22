@@ -102,7 +102,7 @@ const index = () => {
                           data-label="Image"
                         >
                           <img
-                            src={product.photo}
+                            src={`/images/${product.photo}`}
                             alt="product"
                             className="w-16  overflow-hidden shadow block ml-auto md:m-auto"
                           />

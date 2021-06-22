@@ -9,20 +9,17 @@ import React, { useState } from "react";
 import ATextField from "../../../../components/forms/admin/ATextField";
 import AdminLayout from "../../../../layouts/admin/AdminLayout";
 import { convertToBase64 } from "../../../../utils/convertToBase64";
-import {
-  GET_CATEGORIES,
-  GET_CATEGORIES_BY_ADMIN,
-} from "../../../../graphql/queries/categoryQuery";
+import { GET_CATEGORIES_BY_ADMIN } from "../../../../graphql/queries/categoryQuery";
 import { CREATE_SUBCATEGORY } from "../../../../graphql/mutations/subcategoryMutation";
 import FullPageLoading from "../../../../components/skeletonLoading/FullPageLoading";
 import { GET_SUBCATEGORIES } from "../../../../graphql/queries/subcategoryQuery";
 
 const index = () => {
+  const router = useRouter();
   const [state, setState] = useState({
     serverMessage: "",
     error: "",
   });
-  const router = useRouter();
   const {
     loading: queryLoading,
     data: { getCategoriesByAdmin: categories } = {},
@@ -92,6 +89,7 @@ const index = () => {
                     ...state,
                     serverMessage: "Subcateogry added successfully",
                   });
+                  router.push("/admin/subcategory");
                 }
               },
             });

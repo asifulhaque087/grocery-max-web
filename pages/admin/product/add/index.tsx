@@ -15,6 +15,7 @@ import { CREATE_PRODUCT } from "../../../../graphql/mutations/productMutation";
 import { GET_PRODUCTS_BY_ADMIN } from "../../../../graphql/queries/productQuery";
 
 const index = () => {
+  const router = useRouter();
   const [state, setState] = useState({
     serverMessage: "",
     error: "",
@@ -99,6 +100,7 @@ const index = () => {
                     ...state,
                     serverMessage: "Product added successfully",
                   });
+                  router.push("/admin/product");
                 }
               },
             });

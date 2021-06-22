@@ -10,10 +10,7 @@ import { useState } from "react";
 import ATextField from "../../../../components/forms/admin/ATextField";
 import AdminLayout from "../../../../layouts/admin/AdminLayout";
 import { convertToBase64 } from "../../../../utils/convertToBase64";
-import {
-  GET_CATEGORIES,
-  GET_CATEGORIES_BY_ADMIN,
-} from "../../../../graphql/queries/categoryQuery";
+import { GET_CATEGORIES_BY_ADMIN } from "../../../../graphql/queries/categoryQuery";
 
 const index = () => {
   const [state, setState] = useState({
@@ -84,6 +81,7 @@ const index = () => {
                     ...state,
                     serverMessage: "Cateogry added successfully",
                   });
+                  router.push("/admin/category");
                 }
                 // if (data) {
                 //   proxy.writeQuery({

@@ -94,7 +94,7 @@ const index = () => {
                           data-label="Image"
                         >
                           <img
-                            src={category.photo}
+                            src={`/images/${category.photo}`}
                             alt="category"
                             className="w-16  overflow-hidden shadow block ml-auto md:m-auto"
                           />

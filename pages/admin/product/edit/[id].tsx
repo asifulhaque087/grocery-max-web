@@ -12,11 +12,9 @@ import { convertToBase64 } from "../../../../utils/convertToBase64";
 import FullPageLoading from "../../../../components/skeletonLoading/FullPageLoading";
 import { GET_SUBCATEGORIES } from "../../../../graphql/queries/subcategoryQuery";
 import {
-  CREATE_PRODUCT,
   UPDATE_PRODUCT,
 } from "../../../../graphql/mutations/productMutation";
 import {
-  GET_PRODUCTS_BY_ADMIN,
   GET_PRODUCT_BY_ADMIN,
 } from "../../../../graphql/queries/productQuery";
 
@@ -233,7 +231,9 @@ const index = () => {
                     {values.photos &&
                       values.photos.map((photo, i) => (
                         <div key={i}>
-                          <img src={photo} />
+                          <img
+                            src={photo.length > 20 ? photo : `/images/${photo}`}
+                          />
                         </div>
                       ))}
                     <button
@@ -248,7 +248,7 @@ const index = () => {
                         {isSubmitting && (
                           <div className="h-5 w-5 rounded-full border-dotted border-2  border-white animate-spin ease-linear mr-3"></div>
                         )}
-                        <p>Submit</p>
+                        <p>Update</p>
                       </div>
                     </button>
                   </div>
