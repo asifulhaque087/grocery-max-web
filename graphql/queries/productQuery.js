@@ -81,3 +81,83 @@ export const GET_SUB_PRO = gql`
     }
   }
 `;
+// ============================= GET  BEST SELLING QUERY =================>
+
+export const GET_BEST_SELLING_PRODUCTS = gql`
+  {
+    getBestSellingProducts {
+      id
+      name
+      photo
+      description
+      stock
+      qty
+      unit
+      price
+      discountPrice
+      persentage
+      totalSell
+      createdAt
+    }
+  }
+`;
+// ============================= GET  NEW ARRIVAL QUERY =================>
+
+export const GET_NEW_ARRIVAL_PRODUCTS = gql`
+  {
+    getBestNewArrivalProducts {
+      id
+      name
+      photo
+      description
+      stock
+      qty
+      unit
+      price
+      discountPrice
+      persentage
+      totalSell
+      createdAt
+    }
+  }
+`;
+// ============================= GET  MOST DISCOUNT QUERY =================>
+
+export const GET_MOST_DISCOUNT_PRODUCTS = gql`
+  {
+    getMostDiscountProducts {
+      id
+      name
+      photo
+      description
+      stock
+      qty
+      unit
+      price
+      discountPrice
+      persentage
+      totalSell
+      createdAt
+    }
+  }
+`;
+
+// ============================= GET  SUBCATEGORY TO PRODUCT QUERY =================>
+
+export const GET_KEYWORD_PRODUCTS = gql`
+  query getKeywordProducts($keyword: String!) {
+    getKeywordProducts(keyword: $keyword) {
+      id
+      name
+      photo
+      description
+      stock
+      qty
+      unit
+      price
+      discountPrice
+      totalSell
+      createdAt
+    }
+  }
+`;

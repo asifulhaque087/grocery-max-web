@@ -57,6 +57,12 @@ export default new InMemoryCache({
             id: args.id,
           });
         },
+        getSubcategoryNormal(_, { args, toReference }) {
+          return toReference({
+            __typename: "Subcategory",
+            id: args.id,
+          });
+        },
         // getSubToPro(_, { args, toReference }) {
         //   console.log("hola args", args, toReference);
         //   return toReference({

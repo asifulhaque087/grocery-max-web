@@ -3,6 +3,12 @@ import { useRouter } from "next/router";
 import userAuth from "../auths/userAuth";
 import { withApollo } from "../graphql/client";
 import {
+  ShoppingBagIcon,
+  XIcon,
+  ChevronUpIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/solid";
+import {
   paymentMethodVar,
   shippingAddressVar,
 } from "../graphql/reactivities/checkoutProcessVariable";
@@ -38,109 +44,144 @@ const PlaceOrder = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 px-4 sm:px-20">
         <div>
-          <h1 className="text-2xl">Shipping </h1>
-          <p>Address: {shippingAddress.address}</p>
-          <p>Phone Number: {shippingAddress.phone}</p>
-          <hr />
-          <h1 className="text-2xl">Payment Method</h1>
-          <p>Method: {paymentMethod.paymentMethod}</p>
-          <h1 className="text-2xl">Order Items</h1>
           <div>
-            {cartProducts &&
-              cartProducts.map((product) => (
-                <div className="flex items-center my-5" key={product.id}>
-                  <div>{product.name}</div>
-                  <div className="px-3">{product.price}</div>
-                  <div>
-                    {" "}
-                    <img
-                      src={`/images/product/${product.photo}`}
-                      //   alt="product"
-                      className="w-16"
-                    />
-                  </div>
-                  <div>{product.count}</div>
+            <h1 className="text-xl text-gray-600 font-medium py-2 text-center sm:text-left">
+              Shipping{" "}
+            </h1>
+            <p className="pt-2 text-gray-400 text-xs font-medium text-center sm:text-left">
+              {" "}
+              Address: {shippingAddress.address}
+            </p>
+            <p className="py-2 text-gray-400 text-xs font-medium text-center sm:text-left">
+              Phone: {shippingAddress.phone}
+            </p>
+          </div>
+          <hr className="mt-5" />
+          <div>
+            <h1 className="text-xl text-gray-600 font-medium py-2 text-center sm:text-left">
+              Payment Method{" "}
+            </h1>
+            <p className="pt-2 text-gray-400 text-xs font-medium text-center sm:text-left">
+              {" "}
+              Method: {paymentMethod.paymentMethod}
+            </p>
+          </div>
+          {/* <hr className="mt-5" /> */}
+          <div className="mt-10">
+            <h1 className="text-xl text-gray-600 font-medium py-2 text-center sm:text-left">
+              Order Items{" "}
+            </h1>
+            <div>
+              {cartProducts &&
+                cartProducts.map((product) => (
                   <div
-                    className="text-red-500 pl-10"
-                    onClick={() => removeToCart(product)}
+                    key={product.id}
+                    className="border-b flex items-center justify-between"
                   >
-                    x
+                    <div className="flex flex-col items-center">
+                      <div onClick={() => increaseItem(product)}>
+                        <ChevronUpIcon className="h-5 text-gray-300 cursor-pointer" />
+                      </div>
+                      <div>{product.count}</div>
+                      <div onClick={() => decreaseItem(product)}>
+                        <ChevronDownIcon className="h-5 text-gray-300 cursor-pointer" />
+                      </div>
+                    </div>
+                    <div>
+                      <img
+                        src={`/images/${product.photo}`}
+                        alt="product"
+                        width={40}
+                      />
+                    </div>
+                    <div className="px-3 ">
+                      <p className="text-sm">{product.name}</p>
+                      <p className="text-xs text-gray-400">
+                        $ {product.price} / {product.qty} {product.unit}
+                      </p>
+                    </div>
+                    <div className="text-gray-700 text-sm font-medium">
+                      ${product.price * product.count}
+                    </div>
+                    <div onClick={() => removeToCart(product)}>
+                      <XIcon className="h-5 text-red-400 cursor-pointer" />
+                    </div>
                   </div>
-                  <div
-                    className="text-red-500 pl-10"
-                    onClick={() => increaseItem(product)}
-                  >
-                    +
+                ))}
+              {cartProducts.length !== 0 && (
+                <>
+                  <div className="flex items-center justify-center">
+                    <button
+                      onClick={() =>
+                        window.confirm("Are you sure ?") && clearCart()
+                      }
+                      className="px-3 py-1 my-4 rounded text-white font-medium bg-red-500"
+                    >
+                      clear the cart
+                    </button>
                   </div>
-                  <div
-                    className="text-red-500 pl-10"
-                    onClick={() => decreaseItem(product)}
-                  >
-                    -
-                  </div>
-                </div>
-              ))}
-            {cartProducts.length !== 0 && (
-              <>
-                <div
-                  onClick={() =>
-                    window.confirm("Are you sure ?") && clearCart()
-                  }
-                >
-                  <p>clear the cart</p>
-                </div>
-              </>
-            )}
+                </>
+              )}
+            </div>
           </div>
         </div>
-        <div>
+        <div className="sm:pl-20">
           <div className="my-5">
-            <h1 className="text-2xl">Order Summary </h1>
-            <p>
-              items : <span>{cartItemsPrice}</span>
-            </p>
-            <p>
-              shipping : <span>{shippingPrice}</span>
-            </p>
-            <p>
-              tax : <span>{taxPrice}</span>
-            </p>
-            <p>
-              total : <span>{totalPrice}</span>
-            </p>
-            <button
-              className="px-5 border border-green-500 inline-block mb-10"
-              onClick={async () => {
-                const response = await createOrder({
-                  variables: {
-                    paymentMethod: paymentMethod.paymentMethod,
-                    itemPrice: cartItemsPrice,
-                    taxPrice,
-                    shippingPrice,
-                    totalPrice,
-                    shippingAddress,
-                    orderItems: cartProducts.map((item) => {
-                      const { name, count, photo, price, id } = item;
-                      return {
-                        name,
-                        count: count.toString(),
-                        photo,
-                        price,
-                        product: id,
-                      };
-                    }),
-                  },
-                });
+            <h1 className="text-xl text-gray-600 font-medium py-2 text-center ">
+              Order Summary{" "}
+            </h1>
+            <div className="grid grid-cols-2  w-full sm:5/6 md:w-3/5 sm:h-full mx-auto text-gray-600 font-medium text-center">
+              <div className="border py-1 sm:py-2">items</div>
+              <div className="border py-1 sm:py-2 ">
+                <span>{cartItemsPrice}</span>
+              </div>
+              <div className="border py-1 sm:py-2">shipping</div>
+              <div className="border py-1 sm:py-2">
+                <span>{shippingPrice}</span>
+              </div>
+              <div className="border py-1 sm:py-2">tax</div>
+              <div className="border py-1 sm:py-2">
+                <span>{taxPrice}</span>
+              </div>
+              <div className="border py-1 sm:py-2">total</div>
+              <div className="border py-1 sm:py-2">
+                <span>{totalPrice}</span>
+              </div>
+            </div>
+            <div className="flex items-center justify-center">
+              <button
+                className="px-3 py-1 my-4 rounded text-white font-medium bg-green-500"
+                onClick={async () => {
+                  const response = await createOrder({
+                    variables: {
+                      paymentMethod: paymentMethod.paymentMethod,
+                      itemPrice: cartItemsPrice,
+                      taxPrice,
+                      shippingPrice,
+                      totalPrice,
+                      shippingAddress,
+                      orderItems: cartProducts.map((item) => {
+                        const { name, count, photo, price, id } = item;
+                        return {
+                          name,
+                          count: count.toString(),
+                          photo,
+                          price,
+                          product: id,
+                        };
+                      }),
+                    },
+                  });
 
-                // console.log("response", response);
-                router.push(`/order/${response.data.createOrder.id}`);
-              }}
-            >
-              {" "}
-              place order
-            </button>
+                  router.push(`/order/${response.data.createOrder.id}`);
+                }}
+              >
+                {" "}
+                place order
+              </button>
+            </div>
           </div>
         </div>
       </div>

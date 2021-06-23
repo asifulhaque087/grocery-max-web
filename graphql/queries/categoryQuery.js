@@ -5,18 +5,13 @@ import { gql } from "@apollo/client";
 export const GET_CATEGORIES = gql`
   {
     getCategories {
-      errors {
-        field
-        message
-      }
-      category {
+      id
+      name
+      photo
+      subcategories {
         id
         name
         photo
-        subcategories {
-          id
-          name
-        }
       }
     }
   }

@@ -38,6 +38,17 @@ export const GET_SUBCATEGORY = gql`
     }
   }
 `;
+// ============================= GET SINGLE QUERY =================>
+
+export const GET_SUBCATEGORY_NORMAL = gql`
+  query getSubcategoryNormal($id: ID!) {
+    getSubcategoryNormal(id: $id) {
+      id
+      name
+      photo
+    }
+  }
+`;
 // ============================= GET CATEGORY TO SUBCATEGORY QUERY =================>
 
 export const GET_CAT_TO_SUB = gql`

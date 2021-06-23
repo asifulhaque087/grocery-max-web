@@ -3,15 +3,12 @@ import { useField, ErrorMessage } from "formik";
 const TextField = ({ label, ...props }: any) => {
   const [field, meta] = useField<{}>(props);
 
-  // const errorText = meta.error && meta.touched ? meta.error : "";
-
   return (
     <div className="flex flex-wrap">
       <div className="relative w-full appearance-none label-floating">
         <input
           className={`tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full
-           bg-gray-900
-            rounded focus:outline-none focus:bg-white focus:border-gray-500  
+            rounded border border-gray-400  focus:outline-none focus:bg-white focus:border-2 focus:border-green-500  
            ${meta.touched && meta.error && "border border-red-500"}`}
           {...field}
           {...props}

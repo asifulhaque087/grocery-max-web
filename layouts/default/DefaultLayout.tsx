@@ -9,7 +9,7 @@ const DefaultLayout = (props) => {
 
   return (
     <div>
-      <Dtopbar />
+      <Dtopbar {...props} />
       <div className={`${userSideDrawer ? "ml-0 md:ml-64" : "ml-0 md:ml-0"} `}>
         <Dsidedrawer {...props} />
         {props.children}

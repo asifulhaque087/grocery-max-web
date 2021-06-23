@@ -11,6 +11,7 @@ const Dsidedrawer = () => {
   const [state, setState] = useState({
     categories: [],
   });
+  // fetching category
   let { loading, data: { getCategories } = {} } = useQuery(GET_CATEGORIES);
   const userSideDrawer = useReactiveVar(userSideDrawerVar);
 
@@ -19,7 +20,7 @@ const Dsidedrawer = () => {
 
     if (getCategories) {
       for (let cat of getCategories) {
-        newCats.push({ ...cat.category, isOpen: false });
+        newCats.push({ ...cat, isOpen: false });
       }
     }
     setState({
@@ -79,7 +80,7 @@ const Dsidedrawer = () => {
             variants={BigSreen}
             className={`mt-14 fixed inset-y-0 left-0 z-10`}
           >
-            <div className=" h-screen  w-64 border-r bg-white ">
+            <div className=" h-screen  w-64 shadow bg-white ">
               <div className="h-full overflow-x-hidden overflow-y-auto">
                 <ul>
                   <li className="h-16 border-b flex items-center justify-center">
@@ -116,7 +117,10 @@ const Dsidedrawer = () => {
                               >
                                 <div className=" py-1 px-2 w-full flex items-center">
                                   <span>
-                                    <HomeIcon className="h-5 mr-3 text-red-500" />
+                                    <img
+                                      src={`/images/${category.photo}`}
+                                      className="h-5 mr-3"
+                                    />
                                   </span>
                                   <span className="mr-auto font-medium text-gray-800">
                                     {category.name}

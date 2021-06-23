@@ -1,27 +1,25 @@
-import { useQuery, useReactiveVar } from "@apollo/client";
-import Link from "next/link";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { withApollo } from "../../graphql/client";
 import { GET_SUB_PRO } from "../../graphql/queries/productQuery";
 
 import Product from "../../components/default/Product";
-import {
-  addToCart,
-  cartAllPrices,
-  cartItems,
-  clearCart,
-  decreaseItem,
-  increaseItem,
-  removeToCart,
-} from "../../graphql/reactivities/cartVariable";
+import ShoppingCart from "../../components/default/ShoppingCart";
 import DefaultLayout from "../../layouts/default/DefaultLayout";
+import { GET_SUBCATEGORY_NORMAL } from "../../graphql/queries/subcategoryQuery";
 
-const SubCatToProduct = () => {
-  const cartProducts = useReactiveVar(cartItems);
-  const { cartItemsPrice, shippingPrice, taxPrice, totalPrice } =
-    cartAllPrices();
+const SubCatToProduct = (props) => {
   const router = useRouter();
 
+  // fetching subcategory by id
+  const {
+    loading: queryLoading,
+    data: { getSubcategoryNormal: subcategory } = {},
+  } = useQuery(GET_SUBCATEGORY_NORMAL, {
+    variables: { id: router.query.subcategoryId },
+  });
+
+  // fetching product by subcategory
   const { loading, data: { getSubToPro: products } = {} } = useQuery(
     GET_SUB_PRO,
     {
@@ -29,81 +27,39 @@ const SubCatToProduct = () => {
     }
   );
 
-  if (loading) {
+  if (queryLoading || loading) {
     return <div>loading</div>;
   }
 
   return (
     <DefaultLayout>
-      <div className="grid grid-flow-col grid-cols-3 grid-rows-3 gap-4">
+      <ShoppingCart {...props} />
+      <div>
+        <img
+          src={`/images/${subcategory.photo}`}
+          alt="banner"
+          className="w-full m-auto"
+        />
+      </div>
+      <div>
+        <h1 className="text-center  font-medium text-xl uppercase">
+          {" "}
+          <span className="border-b-4 border-green-400">
+            {subcategory.name}
+          </span>{" "}
+        </h1>
+      </div>
+      <div
+        className={`${
+          products.length > 5
+            ? "grid-layout"
+            : "grid gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:flex flex-wrap justify-center"
+        } px-8 my-10`}
+      >
         {products &&
           products.map((product) => (
             <Product key={product.id} product={product} />
           ))}
-      </div>
-      <div>
-        {cartProducts &&
-          cartProducts.map((product) => (
-            <div className="flex items-center my-5" key={product.id}>
-              <div>{product.name}</div>
-              <div>
-                {" "}
-                <img
-                  src={`/images/product/${product.photo}`}
-                  alt="product"
-                  className="w-16"
-                />
-              </div>
-              <div>{product.count}</div>
-              <div
-                className="text-red-500 pl-10"
-                onClick={() => removeToCart(product)}
-              >
-                x
-              </div>
-              <div
-                className="text-red-500 pl-10"
-                onClick={() => increaseItem(product)}
-              >
-                +
-              </div>
-              <div
-                className="text-red-500 pl-10"
-                onClick={() => decreaseItem(product)}
-              >
-                -
-              </div>
-            </div>
-          ))}
-        {cartProducts.length !== 0 && (
-          <>
-            <div
-              onClick={() => window.confirm("Are you sure ?") && clearCart()}
-            >
-              <p>clear the cart</p>
-            </div>
-
-            <li className="rounded border border-green-500 px-3 my-5 inline-block">
-              <Link href="/shipping-info">proceed to checkout</Link>
-            </li>
-          </>
-        )}
-        <hr className="my-10" />
-        <h1>order summary</h1>
-        <div className="my-5">
-          <p>
-            items : <span>{cartItemsPrice}</span>
-          </p>
-          <p>
-            shipping : <span>{shippingPrice}</span>
-          </p>
-          <p>
-            tax : <span>{taxPrice}</span>
-          </p>
-          <p>
-            total : <span>{totalPrice}</span>
-          </p>
-        </div>
       </div>
     </DefaultLayout>
   );

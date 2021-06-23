@@ -46,12 +46,14 @@ export const GET_ORDER = gql`
         email
       }
       orderItems {
+        id
         name
         count
         photo
         price
         product {
           name
+          unit
         }
       }
       shippingAddress {

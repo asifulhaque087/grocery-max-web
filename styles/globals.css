@@ -5,6 +5,15 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities"; */
 
+@layer utilities {
+  .grid-cols-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+  .grid-layout {
+    @apply grid gap-5 grid-cols-auto-fit;
+  }
+}
+
 .tags-input {
   display: grid;
   grid-template-rows: repeat(2, 50px);
@@ -29,3 +38,12 @@
     text-align: left;
   }
 }
+
+/* .full-res {
+    
+  display: grid;
+  grid-template-rows: repeat(2, 350px);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: 20px;
+  grid-auto-rows: 350px;
+} */

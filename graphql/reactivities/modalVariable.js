@@ -1,3 +1,3 @@
 import { makeVar } from "@apollo/client";
 
-export const universalModalVar = makeVar(true);
+export const universalModalVar = makeVar(false);
