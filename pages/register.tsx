@@ -117,7 +117,12 @@ const register = () => {
                 focus:outline-none text-white font-bold py-2 px-4 rounded uppercase"
                     type="submit"
                   >
-                    Sign Up
+                    <div className="flex">
+                      {isSubmitting && (
+                        <div className="h-5 w-5 rounded-full border-dotted border-2  border-white animate-spin ease-linear mr-3"></div>
+                      )}
+                      <p>Sign Up</p>
+                    </div>
                   </button>
                 </div>
                 <div className="my-8">
