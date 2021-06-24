@@ -41,34 +41,30 @@ const UniversalNoticeModal = () => {
                       some vulnerabilities
                     </p>
                     <p className="py-1">
-                      <span className="font-medium">
-                        1. could be little slow :{" "}
-                      </span>{" "}
-                      I am using Apollo Graphql. But In node v14, Apollo Graphql
-                      <span className="font-medium text-black">
-                        {" "}
-                        Upload{" "}
-                      </span>{" "}
-                      type is not support anymore. That's why I am using bese64
-                      image and store directly in mongoDB altas. This is a
-                      little bit overload for free hosting. And as a result site
-                      gets slow.
+                      <span className="font-medium">1. bad engineering : </span>{" "}
+                      Its a big site when it is consideration of portfolio. And
+                      I am very new to graphql, next js and tailwind css. As I
+                      have made this completely alone, in some cases I had to go
+                      through many troubles finding solutions, where I have used
+                      bad practise solutions. But it works. As a example, though
+                      its a grocery site all the products related to shopping
+                      😁😁. Because I dont have good grocery images.
                     </p>
                     <p className="py-1">
                       <span className="font-medium">2. hard reloading : </span>I
                       dont know why sometimes clicking on Link site gets reload
                       and sometiems doesn't. But in production working fine 90%.
                     </p>
-                    <p className="py-1">
+                    {/* <p className="py-1">
                       <span className="font-medium">3. stripe payment : </span>
                       Clicking on stripe payment button, sometimes stripe modal
                       is getting open and sometimes isn't. May be it's a
                       networking issue. But specifically I dont know why it
                       doest that nasty work.
-                    </p>
+                    </p> */}
                     <p className="py-1">
                       <span className="font-medium">
-                        4. send email to spam :{" "}
+                        3. send email to spam :{" "}
                       </span>
                       Reset password link and order invoice could be send in
                       spam. But more likely it will behave as normal.
@@ -107,15 +103,15 @@ const UniversalNoticeModal = () => {
                       <span className="font-medium">
                         4. shopping cart using reactive variables :{" "}
                       </span>
-                      the shopping cart is advaned. It will add product
+                      the shopping cart is advanced. It will add product
                       according to stock. If stock is 0, product will not add.
                     </p>
                     <p className="py-1">
                       <span className="font-medium">
                         5. skeleton Loading & Reponsiveness :{" "}
                       </span>
-                      I have used skeleton loading with animation. And this site
-                      is very responsive even if it is 4k monitor.
+                      I have used skeleton loading with animation (Admin Panel).
+                      And this site is very responsive even if it is 4k monitor.
                     </p>
                   </div>
                   <div className="mt-3">
