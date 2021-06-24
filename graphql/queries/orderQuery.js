@@ -31,6 +31,7 @@ export const GET_ORDERS = gql`
       totalPrice
       isPaid
       isDelivered
+      createdAt
     }
   }
 `;
@@ -45,6 +46,40 @@ export const GET_ORDER = gql`
         name
         email
       }
+      orderItems {
+        id
+        name
+        count
+        photo
+        price
+        product {
+          name
+          unit
+        }
+      }
+      shippingAddress {
+        phone
+        address
+      }
+      paymentResult {
+        updateTime
+      }
+      paymentMethod
+      itemPrice
+      taxPrice
+      shippingPrice
+      totalPrice
+      isPaid
+      isDelivered
+    }
+  }
+`;
+// ============================= GET ORDER QUERY =================>
+
+export const GET_USER_TO_ORDER = gql`
+  {
+    getUserToOrder {
+      id
       orderItems {
         id
         name

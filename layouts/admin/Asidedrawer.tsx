@@ -18,6 +18,22 @@ const Asidedrawer = () => {
         open: false,
       },
       {
+        name: "banner",
+        icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
+        to: "",
+        childrens: [
+          {
+            name: "add banner",
+            to: "/admin/banner/add",
+          },
+          {
+            name: "list banner",
+            to: "/admin/banner",
+          },
+        ],
+        open: false,
+      },
+      {
         name: "category",
         icon: "M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z",
         to: "",
@@ -63,6 +79,12 @@ const Asidedrawer = () => {
             to: "/admin/product",
           },
         ],
+        open: false,
+      },
+      {
+        name: "order",
+        to: "/admin/order",
+        icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
         open: false,
       },
     ],

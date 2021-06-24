@@ -15,7 +15,8 @@ const index = () => {
     variables: { id: router.query.id },
   });
   // update order to paid
-  const [updateOrderToPaid] = useMutation(UPDATE_ORDER_TO_PAID);
+  const [updateOrderToPaid, { loading: mutationLoading }] =
+    useMutation(UPDATE_ORDER_TO_PAID);
 
   if (loading) {
     return (
@@ -95,7 +96,7 @@ const index = () => {
                 orderItems.map((product, i) => (
                   <div
                     key={product.id}
-                    className="border-b flex items-center justify-between"
+                    className="border-b flex items-center justify-between py-5"
                   >
                     <div>
                       <img
@@ -143,25 +144,45 @@ const index = () => {
               </div>
             </div>
             <div className="flex items-center justify-center my-4">
-              <StripeCheckout
-                stripeKey={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
-                token={async (token) => {
-                  const response = await updateOrderToPaid({
-                    variables: {
-                      id: router.query.id,
-                      email: token.email,
-                      source: token.id,
-                    },
-                  });
-                }}
-                name="Grocery Max"
-                amount={totalPrice * 100}
-              >
-                {/* <button className="px-3 py-1 my-4 rounded text-white font-medium bg-green-500">
+              {!isPaid && (
+                <StripeCheckout
+                  stripeKey={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
+                  token={async (token) => {
+                    const response = await updateOrderToPaid({
+                      variables: {
+                        id: router.query.id,
+                        email: token.email,
+                        source: token.id,
+                      },
+                    });
+                    if (response.data.updateOrderToPaid) {
+                      // router.push(`/`);
+                    }
+                  }}
+                  name="Grocery Max"
+                  amount={totalPrice * 100}
+                >
+                  {/* <button className="px-3 py-1 my-4 rounded text-white font-medium bg-green-500">
                   place order
                 </button> */}
-              </StripeCheckout>
+                  {mutationLoading && (
+                    <div className="flex items-center ">
+                      <div className="h-5 w-5 rounded-full border-dotted border-2  border-blue-800 animate-spin ease-linear mr-3"></div>
+                      <p>Pay With Cart</p>
+                    </div>
+                  )}
+                </StripeCheckout>
+              )}
             </div>
+            <div className="flex items-center justify-center my-4">
+              <button
+                onClick={() => router.push("/")}
+                className="px-3 py-1 my-4 rounded text-white font-medium bg-green-500"
+              >
+                Go Home
+              </button>
+            </div>
+            {/* <div></div> */}
           </div>
         </div>
       </div>

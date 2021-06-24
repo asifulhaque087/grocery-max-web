@@ -2,12 +2,18 @@ import Link from "next/link";
 import {
   MenuIcon,
   QuestionMarkCircleIcon,
-  UserIcon,
+  LogoutIcon,
+  DesktopComputerIcon,
 } from "@heroicons/react/solid";
 import { LoginIcon } from "@heroicons/react/outline";
-import Image from "next/image";
+// import Image from "next/image";
 import { userSideDrawerVar } from "../../graphql/reactivities/toogleVariable";
+import { loggedInUserVar } from "../../graphql/reactivities/userVariable";
+import { useReactiveVar } from "@apollo/client";
+import { useRouter } from "next/router";
 const Atopbar = () => {
+  const router = useRouter();
+  const loggedInUser: any = useReactiveVar(loggedInUserVar);
   return (
     <>
       <div className="fixed w-full bg-white z-10">
@@ -21,7 +27,7 @@ const Atopbar = () => {
           </div>
           {/* the logo */}
           <div className="cursor-pointer">
-            <Link href="/">
+            <Link href="/admin">
               <div>
                 {/* <Image src="/pumpkinLogo.png" height={50} width={50} /> */}
                 <h1 className="text-2xl font-bold text-yellow-600">
@@ -41,11 +47,11 @@ const Atopbar = () => {
           {/* admin panel */}
           <div>
             <div className="font-medium cursor-pointer">
-              <Link href="/admin" prefetch={false}>
+              <Link href="/" prefetch={false}>
                 <div className="flex">
-                  <UserIcon className="h-7 text-yellow-500" />
+                  <DesktopComputerIcon className="h-7 text-yellow-500" />
                   <span className="whitespace-nowrap hidden sm:inline">
-                    Admin Panel
+                    Front
                   </span>
                 </div>
               </Link>
@@ -67,15 +73,32 @@ const Atopbar = () => {
           {/* sign in  */}
           <div className=" px-2 md:px-4">
             <div className="font-medium cursor-pointer">
-              {/* <Link href="/login"> */}
-              <Link href="/login" prefetch={false}>
-                <div className="flex">
-                  <LoginIcon className="h-7 text-yellow-500" />
-                  <span className="whitespace-nowrap hidden sm:inline">
-                    Sign in
-                  </span>
+              {typeof window !== "undefined" && loggedInUser ? (
+                <div>
+                  <div
+                    className="flex"
+                    onClick={() => {
+                      sessionStorage.removeItem("jwtToken");
+                      loggedInUserVar(null);
+                      router.push("/admin/login");
+                    }}
+                  >
+                    <LogoutIcon className="h-7 text-yellow-500" />
+                    <span className="whitespace-nowrap hidden sm:inline">
+                      Sign out
+                    </span>
+                  </div>
                 </div>
-              </Link>
+              ) : (
+                <Link href="/login" prefetch={false}>
+                  <div className="flex">
+                    <LoginIcon className="h-7 text-yellow-500" />
+                    <span className="whitespace-nowrap hidden sm:inline">
+                      Sign in
+                    </span>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         </div>

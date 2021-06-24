@@ -25,7 +25,7 @@ import { CREATE_ORDER } from "../graphql/mutations/orderMutation";
 
 const PlaceOrder = () => {
   const router = useRouter();
-  const [createOrder] = useMutation(CREATE_ORDER);
+  const [createOrder, { loading: mutationLoading }] = useMutation(CREATE_ORDER);
 
   //   reactive variable data
   const cartProducts = useReactiveVar(cartItems);
@@ -152,34 +152,41 @@ const PlaceOrder = () => {
             </div>
             <div className="flex items-center justify-center">
               <button
-                className="px-3 py-1 my-4 rounded text-white font-medium bg-green-500"
+                className="px-3 py-1 my-4 rounded text-white font-medium bg-green-500 flex items-center"
                 onClick={async () => {
-                  const response = await createOrder({
-                    variables: {
-                      paymentMethod: paymentMethod.paymentMethod,
-                      itemPrice: cartItemsPrice,
-                      taxPrice,
-                      shippingPrice,
-                      totalPrice,
-                      shippingAddress,
-                      orderItems: cartProducts.map((item) => {
-                        const { name, count, photo, price, id } = item;
-                        return {
-                          name,
-                          count: count.toString(),
-                          photo,
-                          price,
-                          product: id,
-                        };
-                      }),
-                    },
-                  });
-
-                  router.push(`/order/${response.data.createOrder.id}`);
+                  if (cartProducts.length > 0) {
+                    const response = await createOrder({
+                      variables: {
+                        paymentMethod: paymentMethod.paymentMethod,
+                        itemPrice: cartItemsPrice,
+                        taxPrice,
+                        shippingPrice,
+                        totalPrice,
+                        shippingAddress,
+                        orderItems: cartProducts.map((item) => {
+                          const { name, count, photo, price, id } = item;
+                          return {
+                            name,
+                            count: count.toString(),
+                            photo,
+                            price,
+                            product: id,
+                          };
+                        }),
+                      },
+                    });
+                    localStorage.removeItem("shoppingCart");
+                    cartItems([]);
+                    router.push(`/order/${response.data.createOrder.id}`);
+                  }
                 }}
               >
-                {" "}
-                place order
+                <div className="flex items-center ">
+                  {mutationLoading && (
+                    <div className="h-5 w-5 rounded-full border-dotted border-2  border-white animate-spin ease-linear mr-3"></div>
+                  )}
+                  <p>place order</p>
+                </div>
               </button>
             </div>
           </div>

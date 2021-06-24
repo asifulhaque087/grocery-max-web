@@ -2,6 +2,8 @@
 import { useQuery } from "@apollo/client";
 import Head from "next/head";
 import React from "react";
+import Footer from "../components/default/Footer";
+import BannerSlider from "../components/default/homepage/BannerSlider";
 import MainSlider from "../components/default/homepage/MainSlider";
 import ShoppingCart from "../components/default/ShoppingCart";
 import FullPageLoading from "../components/skeletonLoading/FullPageLoading";
@@ -52,32 +54,22 @@ const Home = (props) => {
         </Head>
         <ShoppingCart {...props} />
         {/* banner part top*/}
-        <div
-          style={{
-            backgroundImage: `linear-gradient(to bottom,rgba(0,0,0, .1),
-            rgba(0,0,0, .1)), url(${"/landingBannerTop.jpg"})`,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-          }}
-          className="w-full h-72 grid place-items-center"
-        >
-          <input
-            placeholder="Search for products (e.g. eggs, milk, potato)"
-            className={`py-2 px-4  rounded-lg border w-3/4 border-gray-400  
-            focus:outline-none focus:bg-white focus:border-2 focus:border-yellow-500  
-          `}
-          />
-        </div>
+        <BannerSlider
+          items={[
+            { photo: "/landingBannerTop.jpg" },
+            { photo: "/landingBannerTop.jpg" },
+            { photo: "/landingBannerTop.jpg" },
+          ]}
+        />
         {/* two feature sub cateogries */}
-        <div className="grid my-10 gap-5 sm:grid-cols-2">
+        {/* <div className="grid my-10 gap-5 sm:grid-cols-2">
           <div className="rounded-r-md overflow-hidden shadow border">
             <img src="/landingBannerTop.jpg" alt="" />
           </div>
           <div className="rounded-l-md overflow-hidden shadow border">
             <img src="/landingBannerTop.jpg" alt="" />
           </div>
-        </div>
+        </div> */}
         {/* Most Discount*/}
         <div>
           <div>
@@ -112,9 +104,30 @@ const Home = (props) => {
           <MainSlider items={bestSellingProducts} />
         </div>
       </div>
+      <Footer />
     </DefaultLayout>
   );
 };
 
 // export default Home;
 export default withApollo({ ssr: false })(Home);
+
+{
+  /* <div
+  style={{
+    backgroundImage: `linear-gradient(to bottom,rgba(0,0,0, .1),
+            rgba(0,0,0, .1)), url(${"/landingBannerTop.jpg"})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+  }}
+  className="w-full h-72 grid place-items-center"
+>
+  <input
+    placeholder="Search for products (e.g. eggs, milk, potato)"
+    className={`py-2 px-4  rounded-lg border w-3/4 border-gray-400  
+            focus:outline-none focus:bg-white focus:border-2 focus:border-yellow-500  
+          `}
+  />
+</div>; */
+}

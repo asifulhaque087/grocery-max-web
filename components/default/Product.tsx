@@ -26,7 +26,7 @@ const Product = (props) => {
   return (
     <>
       <div className="shadow-md">
-        <Link href={`/proudct/${id}`}>
+        <Link href={`/product/${id}`}>
           <div className="rounded-tl rounded-tr shadow bg-gray-50n mb-1 relative cursor-pointer">
             <span
               className={`inline-block rounded-full text-white ${

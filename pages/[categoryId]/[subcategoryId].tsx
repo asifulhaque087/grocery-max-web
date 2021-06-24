@@ -7,6 +7,8 @@ import Product from "../../components/default/Product";
 import ShoppingCart from "../../components/default/ShoppingCart";
 import DefaultLayout from "../../layouts/default/DefaultLayout";
 import { GET_SUBCATEGORY_NORMAL } from "../../graphql/queries/subcategoryQuery";
+import Footer from "../../components/default/Footer";
+import FullPageLoading from "../../components/skeletonLoading/FullPageLoading";
 
 const SubCatToProduct = (props) => {
   const router = useRouter();
@@ -28,7 +30,7 @@ const SubCatToProduct = (props) => {
   );
 
   if (queryLoading || loading) {
-    return <div>loading</div>;
+    return <FullPageLoading />;
   }
 
   return (
@@ -61,6 +63,7 @@ const SubCatToProduct = (props) => {
             <Product key={product.id} product={product} />
           ))}
       </div>
+      <Footer />
     </DefaultLayout>
   );
 };

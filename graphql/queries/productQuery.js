@@ -62,6 +62,34 @@ export const GET_PRODUCT_BY_ADMIN = gql`
     }
   }
 `;
+// ============================= GET PRODUCT DETAILS =================>
+
+export const GET_PRODUCT_DETAILS = gql`
+  query getProductDetails($id: ID!) {
+    getProductDetails(id: $id) {
+      id
+      name
+      photo
+      description
+      stock
+      qty
+      unit
+      price
+      discountPrice
+      totalSell
+      createdAt
+
+      subcategory {
+        id
+        name
+        category {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
 // ============================= GET  SUBCATEGORY TO PRODUCT QUERY =================>
 
 export const GET_SUB_PRO = gql`

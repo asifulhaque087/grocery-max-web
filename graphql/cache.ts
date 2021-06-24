@@ -76,6 +76,12 @@ export default new InMemoryCache({
             id: args.id,
           });
         },
+        getProductDetails(_, { args, toReference }) {
+          return toReference({
+            __typename: "Product",
+            id: args.id,
+          });
+        },
         getOrder(_, { args, toReference }) {
           return toReference({
             __typename: "Order",

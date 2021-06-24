@@ -3,6 +3,7 @@ import {
   MenuIcon,
   QuestionMarkCircleIcon,
   UserIcon,
+  UserCircleIcon,
 } from "@heroicons/react/solid";
 import { LoginIcon, LogoutIcon } from "@heroicons/react/outline";
 import Image from "next/image";
@@ -12,8 +13,10 @@ import { useQuery, useReactiveVar } from "@apollo/client";
 import { withApollo } from "../../graphql/client";
 import { GET_KEYWORD_PRODUCTS } from "../../graphql/queries/productQuery";
 import { useState } from "react";
+import { useRouter } from "next/router";
 const Dtopbar = () => {
-  const loggedInUser = useReactiveVar(loggedInUserVar);
+  const router = useRouter();
+  const loggedInUser: any = useReactiveVar(loggedInUserVar);
   const [state, setState] = useState({
     searchedData: [],
     key: "",
@@ -90,8 +93,23 @@ const Dtopbar = () => {
               </Link>
             </div>
           </div>
+          {/* Profile */}
+          {typeof window !== "undefined" && loggedInUser && (
+            <div className="px-2 md:px-4">
+              <div className="font-medium cursor-pointer">
+                <Link href={`/profile`} prefetch={false}>
+                  <div className="flex">
+                    <UserCircleIcon className="h-7 text-yellow-500" />
+                    <span className="whitespace-nowrap hidden sm:inline">
+                      Profile
+                    </span>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          )}
           {/* help and more */}
-          <div className="px-2 md:px-4">
+          <div className="px-2 md:px-4 hidden sm:inline">
             <div className="font-medium cursor-pointer">
               <Link href="/help" prefetch={false}>
                 <div className="flex">
@@ -113,6 +131,8 @@ const Dtopbar = () => {
                     onClick={() => {
                       sessionStorage.removeItem("jwtToken");
                       loggedInUserVar(null);
+                      router.push("/");
+
                     }}
                   >
                     <LogoutIcon className="h-7 text-yellow-500" />

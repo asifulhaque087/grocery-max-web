@@ -44,9 +44,15 @@ const login = () => {
         }}
       >
         {({ values, isSubmitting, errors }) => (
-          <div className="w-full  mx-auto max-w-3xl  p-8 text-gray-700 bg-[rgba(0,0,0,0.1)] rounded-md">
+          <div
+            className="w-full sm:w-[50%] md:w-[30%] mx-auto max-w-3xl 
+          p-8 text-gray-700 bg-[rgba(0,0,0,0.1)] rounded-md"
+          >
             <div className="flex items-center justify-center">
-              <div className="h-20 w-20 rounded-full bg-[rgba(0,0,0,0.1)] flex items-center justify-center">
+              <div
+                className="h-20 w-20 rounded-full bg-[rgba(0,0,0,0.1)] flex items-center 
+              justify-center"
+              >
                 <UserIcon className="h-14 w-14 text-white" />
               </div>
             </div>

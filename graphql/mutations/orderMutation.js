@@ -59,12 +59,14 @@ export const DELETE_ORDER = gql`
   mutation deleteOrder($id: ID!) {
     deleteOrder(id: $id) {
       id
-      name
-      photo
-      createdAt
-      category {
-        id
-      }
+    }
+  }
+`;
+// ============================= DELETE  MUTATION =================>
+export const DELETE_ORDER_BY_USER = gql`
+  mutation deleteOrderByUser($id: ID!) {
+    deleteOrderByUser(id: $id) {
+      id
     }
   }
 `;
@@ -98,6 +100,40 @@ export const UPDATE_ORDER_TO_PAID = gql`
       totalPrice
       isPaid
       isDelivered
+    }
+  }
+`;
+// ============================= UPDATE  MUTATION =================>
+export const UPDATE_ORDER_TO_DELIVERED = gql`
+  mutation updateOrderToDelivered($id: ID!) {
+    updateOrderToDelivered(id: $id) {
+      id
+      user {
+        name
+      }
+      orderItems {
+        name
+        count
+        photo
+        price
+        product {
+          name
+        }
+      }
+      shippingAddress {
+        phone
+        address
+      }
+      paymentResult {
+        updateTime
+      }
+      paymentMethod
+      taxPrice
+      shippingPrice
+      totalPrice
+      isPaid
+      isDelivered
+      createdAt
     }
   }
 `;
