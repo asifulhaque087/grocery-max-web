@@ -60,7 +60,7 @@ const BannerSlider = ({ items }) => {
         <Slider {...settings}>
           {items.map((item, i) => (
             <div key={i} className="rounded-b shadow overflow-hidden">
-              <img src={item.photo} alt="banner" />
+              <img src={`/images/${item.photo}`} alt="banner" />
             </div>
           ))}
         </Slider>

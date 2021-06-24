@@ -20,7 +20,7 @@ const Asidedrawer = () => {
       {
         name: "banner",
         icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
-        to: "",
+        // to: "",
         childrens: [
           {
             name: "add banner",
@@ -36,7 +36,7 @@ const Asidedrawer = () => {
       {
         name: "category",
         icon: "M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z",
-        to: "",
+        // to: "",
         childrens: [
           {
             name: "add category",
@@ -52,7 +52,7 @@ const Asidedrawer = () => {
       {
         name: "subcategory",
         icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
-        to: "",
+        // to: "",
         childrens: [
           {
             name: "add subcategory",
@@ -68,7 +68,7 @@ const Asidedrawer = () => {
       {
         name: "product",
         icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
-        to: "",
+        // to: "",
         childrens: [
           {
             name: "add product",
@@ -160,7 +160,7 @@ const Asidedrawer = () => {
                             className="mx-1 rounded  capitalize text-sm cursor-pointer py-2"
                           >
                             <Link
-                              href={`${url.hasOwnProperty("to") && url.to}`}
+                              href={`${url.hasOwnProperty("to") ? url.to : ""}`}
                             >
                               <div className=" py-1 px-2 w-full flex items-center">
                                 <span>
@@ -177,9 +177,11 @@ const Asidedrawer = () => {
                                 <span className="mr-auto font-medium text-gray-800">
                                   {url.name}
                                 </span>
-                                <span>
-                                  <ChevronRightIcon className="h-3 mr-3 text-gray-500" />
-                                </span>
+                                {!url.hasOwnProperty("to") && (
+                                  <span>
+                                    <ChevronRightIcon className="h-3 mr-3 text-gray-500" />
+                                  </span>
+                                )}
                               </div>
                             </Link>
                           </motion.li>

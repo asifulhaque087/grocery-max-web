@@ -3,9 +3,9 @@ import Link from "next/link";
 
 import { Formik, Form } from "formik";
 import {
-  CREATE_CATEGORY,
-  UPDATE_CATEGORY,
-} from "../../../../graphql/mutations/categoryMutation";
+  CREATE_BANNER,
+  UPDATE_BANNER,
+} from "../../../../graphql/mutations/bannerMutation";
 import { useMutation, useQuery } from "@apollo/client";
 import { toErrorMap } from "../../../../utils/toErrorMap";
 import { withApollo } from "../../../../graphql/client";
@@ -14,31 +14,36 @@ import ATextField from "../../../../components/forms/admin/ATextField";
 import AdminLayout from "../../../../layouts/admin/AdminLayout";
 import { convertToBase64 } from "../../../../utils/convertToBase64";
 import {
-  GET_CATEGORIES,
-  GET_CATEGORY,
-} from "../../../../graphql/queries/categoryQuery";
+  GET_BANNER,
+  GET_BANNERS_BY_ADMIN,
+} from "../../../../graphql/queries/bannerQuery";
 import FullPageLoading from "../../../../components/skeletonLoading/FullPageLoading";
 
 const index = () => {
+  const router = useRouter();
   const [state, setState] = useState({
     serverMessage: "",
     error: "",
   });
-  const router = useRouter();
-  const { loading, data: { getCategory } = {} } = useQuery(GET_CATEGORY, {
+
+  // fetching banner by id
+  const { loading, data: { getBanner } = {} } = useQuery(GET_BANNER, {
     variables: {
       id: router.query.id,
     },
   });
-  const [updateCategory] = useMutation(UPDATE_CATEGORY);
+
+  // updating banner
+  const [updateBanner] = useMutation(UPDATE_BANNER);
+
   if (loading) {
     return <FullPageLoading />;
   }
 
-  if (!getCategory) {
+  if (!getBanner) {
     return (
       <div>
-        <div>could not find category</div>
+        <div>could not find banner</div>
       </div>
     );
   }
@@ -50,7 +55,7 @@ const index = () => {
         <div className="block md:flex items-center justify-between px-5 bg-gray-50 shadow">
           <div>
             <h1 className="capitalize text-3xl font-medium text-center">
-              category
+              banner
             </h1>
           </div>
           <div className="">
@@ -64,43 +69,39 @@ const index = () => {
                 <li>/</li>
                 <li className="px-2">
                   <div className="no-underline text-indigo capitalize">
-                    <Link href="#">category</Link>
+                    <Link href="#">banner</Link>
                   </div>
                 </li>
                 <li>/</li>
-                <li className="px-2 capitalize font-medium">edit category</li>
+                <li className="px-2 capitalize font-medium">edit banner</li>
               </ol>
             </nav>
           </div>
         </div>
         <h1 className="text-center capitalize my-4 text-xl font-medium">
-          edit category
+          edit banner
         </h1>
         <Formik
           initialValues={{
-            name: getCategory.name,
-            photos: [getCategory.photo],
+            id: router.query.id,
+            photos: [getBanner.photo],
           }}
           onSubmit={async (values, actions) => {
-            const response = await updateCategory({
-              variables: {
-                ...values,
-                id: router.query.id,
-                photo: values.photos[0] || "",
-              },
-              update: (_, { data: { updateCategory: newCategory } }) => {
-                if (newCategory?.category) {
+            const response = await updateBanner({
+              variables: { ...values, photo: values.photos[0] || "" },
+              update: (_, { data: { updateBanner: newData } }) => {
+                if (newData?.banner) {
                   setState({
                     ...state,
-                    serverMessage: "Category Edited Successfully",
+                    serverMessage: "Banner Edited Successfully",
                   });
-                  router.push("/admin/category");
+                  router.push("/admin/banner");
                 }
               },
             });
-            if (response.data?.updateCategory.errors) {
+            if (response.data?.updateBanner.errors) {
               let errorsMap: any = toErrorMap(
-                response.data?.updateCategory.errors
+                response.data?.updateBanner.errors
               );
               if (errorsMap.hasOwnProperty("error")) {
                 setState({
@@ -133,15 +134,6 @@ const index = () => {
               >
                 <div className="grid grid-cols-1 mx-5 gap-4 lg:grid-cols-2  lg:gap-8">
                   <div className="rounded bg-gray-50 shadow px-5 py-5">
-                    {/* name */}
-                    <ATextField
-                      name="name"
-                      type="text"
-                      placeholder="Name"
-                      label="Name"
-                    />
-                  </div>
-                  <div className="rounded bg-gray-50 shadow px-5 py-5">
                     {/* photo */}
                     <ATextField
                       onChange={async (e) => {
@@ -153,6 +145,7 @@ const index = () => {
                       type="file"
                       placeholder="Photo"
                       label="Photo"
+                      // value={undefined}
                       value=""
                     />
                     {values.photos &&
@@ -165,7 +158,8 @@ const index = () => {
                       ))}
                     <button
                       disabled={isSubmitting}
-                      className="bg-green-500 text-white active:bg-teal-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 my-3"
+                      className="bg-green-500 text-white active:bg-teal-600 font-bold 
+                      uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 my-3"
                       type="submit"
                       style={{ transition: "all .15s ease" }}
                     >
@@ -173,7 +167,7 @@ const index = () => {
                         {isSubmitting && (
                           <div className="h-5 w-5 rounded-full border-dotted border-2  border-white animate-spin ease-linear mr-3"></div>
                         )}
-                        <p>Update</p>
+                        <p>Submit</p>
                       </div>
                     </button>
                   </div>

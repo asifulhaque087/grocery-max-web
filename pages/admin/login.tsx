@@ -9,6 +9,7 @@ import { withApollo } from "../../graphql/client";
 import { useState } from "react";
 import { UserIcon } from "@heroicons/react/outline";
 import AauthTextField from "../../components/forms/admin/AauthTextField";
+import { loggedInUserVar } from "../../graphql/reactivities/userVariable";
 
 const login = () => {
   const [state, setState] = useState({
@@ -38,7 +39,7 @@ const login = () => {
             actions.setErrors(errorsMap);
           } else if (response.data?.login.user) {
             sessionStorage.setItem("jwtToken", response.data?.login.user.token);
-
+            loggedInUserVar(response.data?.login.user);
             router.push("/admin");
           }
         }}

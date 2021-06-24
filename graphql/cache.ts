@@ -7,11 +7,20 @@ export default new InMemoryCache({
       fields: {
         getCategories: {
           merge: (existing, incoming) => {
-            // return [...existing, ...incoming];
             return incoming;
           },
         },
         getCategoriesByAdmin: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
+        getBanners: {
+          merge: (existing, incoming) => {
+            return incoming;
+          },
+        },
+        getBannersByAdmin: {
           merge(existing, incoming) {
             return incoming;
           },
@@ -32,9 +41,14 @@ export default new InMemoryCache({
           },
         },
         getCategory(_, { args, toReference }) {
-          console.log("from cache", args.id);
           return toReference({
             __typename: "Category",
+            id: args.id,
+          });
+        },
+        getBanner(_, { args, toReference }) {
+          return toReference({
+            __typename: "Banner",
             id: args.id,
           });
         },

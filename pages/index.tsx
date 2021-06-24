@@ -8,6 +8,7 @@ import MainSlider from "../components/default/homepage/MainSlider";
 import ShoppingCart from "../components/default/ShoppingCart";
 import FullPageLoading from "../components/skeletonLoading/FullPageLoading";
 import { withApollo } from "../graphql/client";
+import { GET_BANNERS } from "../graphql/queries/bannerQuery";
 import {
   GET_BEST_SELLING_PRODUCTS,
   GET_MOST_DISCOUNT_PRODUCTS,
@@ -17,6 +18,9 @@ import {
 import DefaultLayout from "../layouts/default/DefaultLayout";
 
 const Home = (props) => {
+  // fetching banner products
+  const { loading: bannerLoading, data: { getBanners: banners } = {} } =
+    useQuery(GET_BANNERS);
   // fetching most discount products
   const {
     loading: mostDiscountLoading,
@@ -33,7 +37,12 @@ const Home = (props) => {
     data: { getBestSellingProducts: bestSellingProducts } = {},
   } = useQuery(GET_BEST_SELLING_PRODUCTS);
 
-  if (bestSellingLoading || newArrivalLoading || mostDiscountLoading) {
+  if (
+    bannerLoading ||
+    bestSellingLoading ||
+    newArrivalLoading ||
+    mostDiscountLoading
+  ) {
     return (
       <div>
         <FullPageLoading />
@@ -54,23 +63,7 @@ const Home = (props) => {
         </Head>
         <ShoppingCart {...props} />
         {/* banner part top*/}
-        <BannerSlider
-          items={[
-            { photo: "/landingBannerTop.jpg" },
-            { photo: "/landingBannerTop.jpg" },
-            { photo: "/landingBannerTop.jpg" },
-          ]}
-        />
-        {/* two feature sub cateogries */}
-        {/* <div className="grid my-10 gap-5 sm:grid-cols-2">
-          <div className="rounded-r-md overflow-hidden shadow border">
-            <img src="/landingBannerTop.jpg" alt="" />
-          </div>
-          <div className="rounded-l-md overflow-hidden shadow border">
-            <img src="/landingBannerTop.jpg" alt="" />
-          </div>
-        </div> */}
-        {/* Most Discount*/}
+        <BannerSlider items={banners} />
         <div>
           <div>
             <h1 className="capitalize text-lg font-medium text-gray-700 text-center">
