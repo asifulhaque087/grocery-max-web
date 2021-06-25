@@ -47,7 +47,7 @@ const UniversalNoticeModal = () => {
                       have made this completely alone, in some cases I had to go
                       through many troubles finding solutions, where I have used
                       bad practise solutions. But it works. As a example, though
-                      its a grocery site all the products related to shopping
+                      its a grocery site, all the products here related to shopping
                       😁😁. Because I dont have good grocery images.
                     </p>
                     <p className="py-1">

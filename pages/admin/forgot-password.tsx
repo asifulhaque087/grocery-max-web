@@ -1,4 +1,3 @@
-
 import { Formik, Form } from "formik";
 import { FORGOT_PASSWORD_USER } from "../../graphql/mutations/userMutation";
 import { useMutation } from "@apollo/client";
@@ -6,6 +5,8 @@ import { toErrorMap } from "../../utils/toErrorMap";
 import { withApollo } from "../../graphql/client";
 import React, { useState } from "react";
 import AauthTextField from "../../components/forms/admin/AauthTextField";
+import { UserIcon } from "@heroicons/react/outline";
+import Link from "next/link";
 
 const forgotPassword = () => {
   const [state, setState] = useState({
@@ -15,90 +16,91 @@ const forgotPassword = () => {
   const [forgotPassword] = useMutation(FORGOT_PASSWORD_USER);
 
   return (
-    <Formik
-      initialValues={{
-        // email: "admin@gmail.com",
-        email: "",
-        error: "",
-      }}
-      onSubmit={async (values, actions) => {
-        const response = await forgotPassword({ variables: values });
+    <div className="bg-gray-500 h-screen flex items-center px-2">
+      <Formik
+        initialValues={{
+          // email: "admin@gmail.com",
+          email: "",
+          error: "",
+        }}
+        onSubmit={async (values, actions) => {
+          const response = await forgotPassword({ variables: values });
 
-        if (response.data?.forgotPassword.errors) {
-          let errorsMap: any= toErrorMap(response.data?.forgotPassword.errors);
-          if (errorsMap.hasOwnProperty("error")) {
+          if (response.data?.forgotPassword.errors) {
+            let errorsMap: any = toErrorMap(
+              response.data?.forgotPassword.errors
+            );
+            if (errorsMap.hasOwnProperty("error")) {
+              setState({
+                ...state,
+                error: errorsMap.error,
+              });
+            }
+            actions.setErrors(errorsMap);
+          } else if (response.data?.forgotPassword.url) {
             setState({
               ...state,
-              error: errorsMap.error,
+              serverMessage: response.data?.forgotPassword.url,
             });
           }
-          actions.setErrors(errorsMap);
-        } else if (response.data?.forgotPassword.url) {
-          setState({
-            ...state,
-            serverMessage: response.data?.forgotPassword.url,
-          });
-        }
-      }}
-    >
-      {({ values, isSubmitting, errors }) => (
-        <div className="w-full mx-auto max-w-3xl bg-white shadow p-8 text-gray-700 ">
-          <h2 className="w-full  text-3xl font-bold leading-tight my-5 text-center">
-            Admin Forgot Password Form
-          </h2>
-          <p>
-            Please enter the email address you register your account with. We
-            will send you reset password confirmation to this email.
-          </p>
-          {state.serverMessage && (
-            <div className="bg-green-500 p-2 text-white font-semibold my-3">
-              {state.serverMessage}
-            </div>
-          )}
-          {state.error && (
-            <div className="bg-red-500 p-2 text-white font-semibold my-3">
-              {state.error}
-            </div>
-          )}
-          <Form>
-            <AauthTextField
-              name="email"
-              type="email"
-              placeholder="Email"
-              label="Email"
-            />
-            <div
-              className={`${errors.hasOwnProperty("error") ? "" : "hidden"}`}
-            >
-              <AauthTextField
-                name="error"
-                type="hidden"
-                placeholder="Error"
-                label="Error"
-              />
-            </div>
-            <div>
-              <button
-                disabled={isSubmitting}
-                className="w-full shadow bg-green-400 hover:bg-green-400 focus:shadow-outline
-                focus:outline-none text-white font-bold py-2 px-4 rounded"
-                type="submit"
+        }}
+      >
+        {({ values, isSubmitting, errors }) => (
+          <div
+            className="w-full sm:w-[50%] md:w-[30%] mx-auto max-w-3xl 
+            p-8 text-gray-700 bg-[rgba(0,0,0,0.1)] rounded-md"
+          >
+            <div className="flex items-center justify-center">
+              <div
+                className="h-20 w-20 rounded-full bg-[rgba(0,0,0,0.1)] flex items-center 
+              justify-center"
               >
-                Send Mail
-              </button>
+                <UserIcon className="h-14 w-14 text-white" />
+              </div>
             </div>
-            {/* <p className="text-blue-500">
-              <Link href="/admin/register">dont have a account?</Link>
+            {state.serverMessage && (
+              <div className="bg-green-500 p-2 text-white font-semibold my-3">
+                {state.serverMessage}
+              </div>
+            )}
+            {state.error && (
+              <div className="bg-red-500 p-2 text-white font-semibold my-3">
+                {state.error}
+              </div>
+            )}
+            <p className="text-gray-400 mt-5">
+              Please enter the email address you register your account with. We
+              will send you reset password confirmation to this email.
             </p>
-            <p className="text-blue-500">
-              <Link href="/admin/forgot-password">forgot password?</Link>
-            </p> */}
-            <pre>{JSON.stringify(values, null, 2)}</pre>
-            <pre>{JSON.stringify(errors, null, 2)}</pre>
-          </Form>
-        </div>
-      )}
-    </Formik>
+            <Form>
+              <div className="my-3">
+                <AauthTextField
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  label="Email"
+                />
+              </div>
+              <div>
+                <button
+                  disabled={isSubmitting}
+                  className="w-full shadow bg-white hover:bg-green-400 focus:shadow-outline
+                  focus:outline-none text-gray-700 font-bold py-2 px-4 rounded"
+                  type="submit"
+                >
+                  Send Email
+                </button>
+              </div>
+              <div className="my-3 ">
+                <p className="text-gray-800 text-center">
+                  <Link href="/admin/login">Login</Link>
+                </p>
+              </div>
+            </Form>
+          </div>
+        )}
+      </Formik>
+    </div>
   );
 };
 

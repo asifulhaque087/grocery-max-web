@@ -104,12 +104,6 @@ const login = () => {
                   Login
                 </button>
               </div>
-              {/* <p className="text-blue-500">
-              <Link href="/admin/register">dont have a account?</Link>
-            </p> */}
-
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-            <pre>{JSON.stringify(errors, null, 2)}</pre> */}
             </Form>
           </div>
         )}
