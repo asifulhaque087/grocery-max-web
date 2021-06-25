@@ -6,7 +6,7 @@ const UniversalNoticeModal = () => {
   const universalModal = useReactiveVar(universalModalVar);
   return (
     <AnimatePresence>
-      {universalModal && (
+      {!universalModal && (
         <div className="px-5 fixed z-20 h-full w-full flex items-center justify-center top-0 left-0">
           <motion.div
             initial={{ x: "100vw", opacity: 0 }}
@@ -47,8 +47,8 @@ const UniversalNoticeModal = () => {
                       have made this completely alone, in some cases I had to go
                       through many troubles finding solutions, where I have used
                       bad practise solutions. But it works. As a example, though
-                      its a grocery site, all the products here related to shopping
-                      😁😁. Because I dont have good grocery images.
+                      its a grocery site, all the products here related to
+                      shopping 😁😁. Because I dont have good grocery images.
                     </p>
                     <p className="py-1">
                       <span className="font-medium">2. hard reloading : </span>I
@@ -123,6 +123,22 @@ const UniversalNoticeModal = () => {
                       have achieved those, I am very very confident that, I can
                       achieve more if I have a chance working with your company.
                     </p>
+                  </div>
+
+                  <div className="mt-3">
+                    <p className="text-yellow-600 font-bold">how to use it.</p>
+                    <div className="py-1">
+                      <p className="pb-2">its a demo video. </p>
+                      <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube.com/embed/-CIAkWV-u58"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
                   </div>
                 </div>
               </div>
