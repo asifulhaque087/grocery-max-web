@@ -6,7 +6,7 @@ const UniversalNoticeModal = () => {
   const universalModal = useReactiveVar(universalModalVar);
   return (
     <AnimatePresence>
-      {!universalModal && (
+      {universalModal && (
         <div className="px-5 fixed z-20 h-full w-full flex items-center justify-center top-0 left-0">
           <motion.div
             initial={{ x: "100vw", opacity: 0 }}
