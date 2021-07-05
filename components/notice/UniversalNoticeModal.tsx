@@ -53,7 +53,7 @@ const UniversalNoticeModal = () => {
                     <p className="py-1">
                       <span className="font-medium">2. hard reloading : </span>I
                       dont know why sometimes clicking on Link site gets reload
-                      and sometiems doesn't. But in production working fine 90%.
+                      and sometimes doesn't. But in production working fine 90%.
                     </p>
                     {/* <p className="py-1">
                       <span className="font-medium">3. stripe payment : </span>
@@ -108,7 +108,7 @@ const UniversalNoticeModal = () => {
                     </p>
                     <p className="py-1">
                       <span className="font-medium">
-                        5. skeleton Loading & Reponsiveness :{" "}
+                        5. skeleton Loading & Responsiveness :{" "}
                       </span>
                       I have used skeleton loading with animation (Admin Panel).
                       And this site is very responsive even if it is 4k monitor.
