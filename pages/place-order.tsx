@@ -1,7 +1,7 @@
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/router";
 import userAuth from "../auths/userAuth";
-import { withApollo } from "../graphql/client";
+// import { withApollo } from "../graphql/client";
 import {
   ShoppingBagIcon,
   XIcon,
@@ -197,4 +197,4 @@ const PlaceOrder = () => {
 };
 
 // export default PlaceOrder;
-export default withApollo({ ssr: false })(userAuth(PlaceOrder));
+export default (userAuth(PlaceOrder));

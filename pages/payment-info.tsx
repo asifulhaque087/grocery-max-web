@@ -2,7 +2,7 @@ import { useReactiveVar } from "@apollo/client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useRouter } from "next/router";
 import userAuth from "../auths/userAuth";
-import { withApollo } from "../graphql/client";
+// import { withApollo } from "../graphql/client";
 import {
   paymentMethodVar,
   shippingAddressVar,
@@ -86,4 +86,5 @@ const PaymentInfo = () => {
 };
 
 // export default PaymentInfo;
-export default withApollo({ ssr: false })(userAuth(PaymentInfo));
+// export default withApollo({ ssr: false })(userAuth(PaymentInfo));
+export default (userAuth(PaymentInfo));

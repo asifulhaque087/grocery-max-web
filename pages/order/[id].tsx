@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import StripeCheckout from "react-stripe-checkout";
 import userAuth from "../../auths/userAuth";
-import { withApollo } from "../../graphql/client";
+// import { withApollo } from "../../graphql/client";
 import { UPDATE_ORDER_TO_PAID } from "../../graphql/mutations/orderMutation";
 import { GET_ORDER } from "../../graphql/queries/orderQuery";
 
@@ -191,4 +191,5 @@ const index = () => {
 };
 
 // export default  index;
-export default withApollo({ ssr: false })(userAuth(index));
+export default (userAuth(index));
+// export default withApollo({ ssr: false })(userAuth(index));

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import { Formik, Form } from "formik";
 import TextField from "../components/forms/TextField";
-import { withApollo } from "../graphql/client";
+// import { withApollo } from "../graphql/client";
 import { toErrorMap } from "../utils/toErrorMap";
 import { shippingAddressVar } from "../graphql/reactivities/checkoutProcessVariable";
 import DefaultLayout from "../layouts/default/DefaultLayout";
@@ -80,4 +80,5 @@ const ShippingInfo = () => {
   );
 };
 
-export default withApollo({ ssr: false })(userAuth(ShippingInfo));
+// export default withApollo({ ssr: false })(userAuth(ShippingInfo));
+export default (userAuth(ShippingInfo));

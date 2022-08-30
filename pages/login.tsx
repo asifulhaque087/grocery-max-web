@@ -7,7 +7,7 @@ import { LOGIN_USER } from "../graphql/mutations/userMutation";
 import { useMutation } from "@apollo/client";
 import { toErrorMap } from "../utils/toErrorMap";
 import TextField from "../components/forms/TextField";
-import { withApollo } from "../graphql/client";
+// import { withApollo } from "../graphql/client";
 import { useState } from "react";
 import { loggedInUserVar } from "../graphql/reactivities/userVariable";
 
@@ -142,4 +142,5 @@ const login = () => {
   );
 };
 
-export default withApollo({ ssr: false })(login);
+// export default withApollo({ ssr: false })(login);
+export default login;

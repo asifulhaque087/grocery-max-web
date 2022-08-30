@@ -1,12 +1,12 @@
 import DefaultLayout from "../../layouts/default/DefaultLayout";
 
 import Footer from "../../components/default/Footer";
-import { withApollo } from "../../graphql/client";
+// import { withApollo } from "../../graphql/client";
 import { PlusIcon, MinusIcon } from "@heroicons/react/outline";
 import React from "react";
 import { GET_PRODUCT_DETAILS } from "../../graphql/queries/productQuery";
 import { useRouter } from "next/router";
-import { useQuery, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import FullPageLoading from "../../components/skeletonLoading/FullPageLoading";
 import {
   cartItems,
@@ -15,20 +15,14 @@ import {
   increaseItem,
 } from "../../graphql/reactivities/cartVariable";
 import ShoppingCart from "../../components/default/ShoppingCart";
+import client from "../../graphql/client";
 
-const index = (props) => {
+const index = ({loading, product}) => {
   const router = useRouter();
 
   const cartProducts = useReactiveVar(cartItems);
+
   // fetching product by id
-  const { loading, data: { getProductDetails: product } = {} } = useQuery(
-    GET_PRODUCT_DETAILS,
-    {
-      variables: {
-        id: router.query.id,
-      },
-    }
-  );
 
   if (loading) {
     return <FullPageLoading />;
@@ -39,7 +33,7 @@ const index = (props) => {
 
   return (
     <DefaultLayout>
-      <ShoppingCart {...props} />
+      <ShoppingCart />
       <div>
         <div className="grid md:grid-cols-2 px-7 py-20">
           {/* left */}
@@ -86,4 +80,24 @@ const index = (props) => {
   );
 };
 
-export default withApollo({ ssr: true })(index);
+export default index;
+
+
+
+export async function getServerSideProps(context) {
+
+  const { id } = context.params;
+
+  const { loading, data: { getProductDetails: product } = {} } = await client.query({
+    query:  GET_PRODUCT_DETAILS,   variables: { id },
+  });
+
+
+
+  return {
+    props: {
+      loading,
+      product
+    },
+  };
+}
