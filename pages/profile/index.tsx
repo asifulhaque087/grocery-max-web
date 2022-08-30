@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import moment from "moment";
 
-import { withApollo } from "../../graphql/client";
+// import { withApollo } from "../../graphql/client";
 import { GET_USER_TO_ORDER } from "../../graphql/queries/orderQuery";
 import DefaultLayout from "../../layouts/default/DefaultLayout";
 import TableLoading from "../../components/skeletonLoading/TableLoading";
@@ -146,4 +146,4 @@ const index = () => {
   );
 };
 
-export default withApollo({ ssr: false })(userAuth(index));
+export default userAuth(index);
