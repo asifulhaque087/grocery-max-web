@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 import { LOGIN_USER } from "../../graphql/mutations/userMutation";
 import { useMutation } from "@apollo/client";
 import { toErrorMap } from "../../utils/toErrorMap";
-import { withApollo } from "../../graphql/client";
+// import { withApollo } from "../../graphql/client";
 import { useState } from "react";
 import { UserIcon } from "@heroicons/react/outline";
 import AauthTextField from "../../components/forms/admin/AauthTextField";
@@ -112,4 +112,4 @@ const login = () => {
   );
 };
 
-export default withApollo({ ssr: true })(login);
+export default login;

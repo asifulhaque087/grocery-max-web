@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useReactiveVar } from "@apollo/client";
 import { HomeIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import { withApollo } from "../../graphql/client";
+// import { withApollo } from "../../graphql/client";
 import { userSideDrawerVar } from "../../graphql/reactivities/toogleVariable";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -241,7 +241,7 @@ const Asidedrawer = () => {
   );
 };
 
-export default withApollo({ ssr: false })(Asidedrawer);
+export default Asidedrawer;
 
 // visible: (i) => ({
 //   opacity: 1,

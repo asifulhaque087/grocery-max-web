@@ -2,7 +2,7 @@ import Link from "next/link";
 import moment from "moment";
 import { TrashIcon, PencilAltIcon } from "@heroicons/react/solid";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
-import { withApollo } from "../../../graphql/client";
+// import { withApollo } from "../../../graphql/client";
 import AdminLayout from "../../../layouts/admin/AdminLayout";
 import { GET_CATEGORIES_BY_ADMIN } from "../../../graphql/queries/categoryQuery";
 import { DELETE_CATEGORY } from "../../../graphql/mutations/categoryMutation";
@@ -157,4 +157,5 @@ const index = () => {
   );
 };
 
-export default withApollo({ ssr: false })(index);
+export default index;
+// export default withApollo({ ssr: false })(index);

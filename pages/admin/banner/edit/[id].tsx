@@ -8,7 +8,7 @@ import {
 } from "../../../../graphql/mutations/bannerMutation";
 import { useMutation, useQuery } from "@apollo/client";
 import { toErrorMap } from "../../../../utils/toErrorMap";
-import { withApollo } from "../../../../graphql/client";
+// import { withApollo } from "../../../../graphql/client";
 import { useState } from "react";
 import ATextField from "../../../../components/forms/admin/ATextField";
 import AdminLayout from "../../../../layouts/admin/AdminLayout";
@@ -181,4 +181,4 @@ const index = () => {
   );
 };
 
-export default withApollo({ ssr: true })(index);
+export default index;

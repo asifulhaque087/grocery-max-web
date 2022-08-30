@@ -6,7 +6,7 @@ import AdminLayout from "../../../../layouts/admin/AdminLayout";
 
 import FullPageLoading from "../../../../components/skeletonLoading/FullPageLoading";
 import { GET_ORDER } from "../../../../graphql/queries/orderQuery";
-import { withApollo } from "../../../../graphql/client";
+// import { withApollo } from "../../../../graphql/client";
 
 const index = () => {
   const router = useRouter();
@@ -173,4 +173,4 @@ const index = () => {
 };
 
 // export default  index;
-export default withApollo({ ssr: false })(index);
+export default index;
