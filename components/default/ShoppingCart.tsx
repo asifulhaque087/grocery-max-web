@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useReactiveVar } from "@apollo/client";
-import { withApollo } from "../../graphql/client";
+// import { withApollo } from "../../graphql/client";
 import {
   ShoppingBagIcon,
   XIcon,
@@ -17,6 +17,7 @@ import {
   removeToCart,
 } from "../../graphql/reactivities/cartVariable";
 import React, { useState } from "react";
+
 const ShoppingCart = () => {
   const cartProducts = useReactiveVar(cartItems);
   const { cartItemsPrice, shippingPrice, taxPrice, totalPrice } =
@@ -151,4 +152,5 @@ const ShoppingCart = () => {
   );
 };
 
-export default withApollo({ ssr: false })(ShoppingCart);
+// export default withApollo({ ssr: false })(ShoppingCart);
+export default ShoppingCart;

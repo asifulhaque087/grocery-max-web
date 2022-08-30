@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { HomeIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import { withApollo } from "../../graphql/client";
+// import { withApollo } from "../../graphql/client";
 import { GET_CATEGORIES } from "../../graphql/queries/categoryQuery";
 import { userSideDrawerVar } from "../../graphql/reactivities/toogleVariable";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
@@ -185,7 +185,8 @@ const Dsidedrawer = () => {
   );
 };
 
-export default withApollo({ ssr: false })(Dsidedrawer);
+// export default withApollo({ ssr: false })(Dsidedrawer);
+export default Dsidedrawer;
 
 // visible: (i) => ({
 //   opacity: 1,

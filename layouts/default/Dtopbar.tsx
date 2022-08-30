@@ -10,7 +10,7 @@ import Image from "next/image";
 import { userSideDrawerVar } from "../../graphql/reactivities/toogleVariable";
 import { loggedInUserVar } from "../../graphql/reactivities/userVariable";
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { withApollo } from "../../graphql/client";
+// import { withApollo } from "../../graphql/client";
 import { GET_KEYWORD_PRODUCTS } from "../../graphql/queries/productQuery";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -193,4 +193,5 @@ const Dtopbar = () => {
   );
 };
 
-export default withApollo({ ssr: false })(Dtopbar);
+// export default withApollo({ ssr: false })(Dtopbar);
+export default Dtopbar;
