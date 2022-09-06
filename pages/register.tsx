@@ -2,7 +2,7 @@ import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client";
 import TextField from "../components/forms/TextField";
 import { REGISTER_USER } from "../graphql/mutations/userMutation";
-import { withApollo } from "../graphql/client";
+// import { withApollo } from "../graphql/client";
 import { useRouter } from "next/router";
 import { toErrorMap } from "../utils/toErrorMap";
 import Link from "next/link";
@@ -146,6 +146,6 @@ const register = () => {
   );
 };
 
-export default withApollo({ ssr: false })(register);
+export default register;
 
 // #06b6d4

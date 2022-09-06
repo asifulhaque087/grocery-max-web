@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { withApollo } from "../../graphql/client";
+// import { withApollo } from "../../graphql/client";
 import { GET_SUB_PRO } from "../../graphql/queries/productQuery";
 
 import Product from "../../components/default/Product";
@@ -68,4 +68,5 @@ const SubCatToProduct = (props) => {
   );
 };
 
-export default withApollo({ ssr: true })(SubCatToProduct);
+// export default withApollo({ ssr: true })(SubCatToProduct);
+export default SubCatToProduct;

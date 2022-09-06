@@ -2,7 +2,7 @@ import { Formik, Form } from "formik";
 import { FORGOT_PASSWORD_USER } from "../../graphql/mutations/userMutation";
 import { useMutation } from "@apollo/client";
 import { toErrorMap } from "../../utils/toErrorMap";
-import { withApollo } from "../../graphql/client";
+// import { withApollo } from "../../graphql/client";
 import React, { useState } from "react";
 import AauthTextField from "../../components/forms/admin/AauthTextField";
 import { UserIcon } from "@heroicons/react/outline";
@@ -104,4 +104,5 @@ const forgotPassword = () => {
   );
 };
 
-export default withApollo({ ssr: true })(forgotPassword);
+// export default withApollo({ ssr: true })(forgotPassword);
+export default forgotPassword;

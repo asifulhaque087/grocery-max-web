@@ -7,7 +7,7 @@ import { toErrorMap } from "../../../utils/toErrorMap";
 import React, { useState } from "react";
 import { RESET_PASSWORD_USER } from "../../../graphql/mutations/userMutation";
 
-import { withApollo } from "../../../graphql/client";
+// import { withApollo } from "../../../graphql/client";
 import AauthTextField from "../../../components/forms/admin/AauthTextField";
 
 import { UserIcon } from "@heroicons/react/outline";
@@ -116,4 +116,4 @@ const index = () => {
   );
 };
 
-export default withApollo({ ssr: false })(index);
+export default index;

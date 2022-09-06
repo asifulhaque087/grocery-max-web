@@ -5,7 +5,7 @@ import { FORGOT_PASSWORD_USER } from "../graphql/mutations/userMutation";
 import { useMutation } from "@apollo/client";
 import { toErrorMap } from "../utils/toErrorMap";
 import TextField from "../components/forms/TextField";
-import { withApollo } from "../graphql/client";
+// import { withApollo } from "../graphql/client";
 import { useState } from "react";
 
 const forgotPassword = () => {
@@ -123,4 +123,5 @@ const forgotPassword = () => {
   );
 };
 
-export default withApollo({ ssr: true })(forgotPassword);
+// export default withApollo({ ssr: true })(forgotPassword);
+export default forgotPassword;
